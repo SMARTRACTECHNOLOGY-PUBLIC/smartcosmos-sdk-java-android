@@ -1,8 +1,8 @@
 # smartcosmos-sdk-java-android
 SMART COSMOS SDK Java for Android
 
-## Profiles RestClient
-Profiles REST API optimized for Android Java.
+## SMART COSMOS Profiles RestClient
+Profiles REST API optimized for Android Java
 
 ### Dependencies
 
