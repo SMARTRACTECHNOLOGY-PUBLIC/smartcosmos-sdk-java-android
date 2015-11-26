@@ -12,7 +12,7 @@ Profiles REST API optimized for Android Java
 
 ### Documentation
 
-[How-to: Integrate Profiles RestClient in Android](http://./profiles-restclient/HOWTO-INTEGRATE.md "How-to: Integrate Profiles RestClient in Android")
+[How-to: Integrate Profiles RestClient in Android](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/profiles-restclient/HOWTO-INTEGRATE.md "How-to: Integrate Profiles RestClient in Android")
 
 ## SMART COSMOS Utility for Android
 Support library for SMART COSMOS SDKs
