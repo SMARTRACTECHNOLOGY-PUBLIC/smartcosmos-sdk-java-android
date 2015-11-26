@@ -10,6 +10,10 @@ Profiles REST API optimized for Android Java
  - Google GSON 2.4
  - SMART COSMOS Utility for Android
 
+### Documentation
+
+[How-to: Integrate Profiles RestClient in Android](http://./profiles-restclient/HOWTO-INTEGRATE.md "How-to: Integrate Profiles RestClient in Android")
+
 ## SMART COSMOS Utility for Android
 Support library for SMART COSMOS SDKs
 
