@@ -30,7 +30,7 @@ This guide describes how to verify the authenticity of a NXP chip using the Prof
 				break;
 				default:
 					/* handle error state */
-					throw SomewhatException(result.message);
+					throw SomewhatException(result.sMessage);
 			}
 		}
 	}
