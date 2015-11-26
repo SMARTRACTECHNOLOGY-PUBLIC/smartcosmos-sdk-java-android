@@ -40,8 +40,8 @@ To access a Profiles endpoint, create a worker task by extending an AsyncTask an
 	/* other imports */
 	 
 	// Import stuff for Profiles Client
-	import com.smartrac.profiles.ProfilesRestClient;
-	import com.smartrac.profiles.ProfilesRestClient.ProfilesRestResult;
+	import net.smartcosmos.android.ProfilesRestClient;
+	import net.smartcosmos.android.ProfilesRestClient.ProfilesRestResult;
 	 
 	public class MyActivity extends Activity {
 	 

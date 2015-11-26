@@ -12,7 +12,8 @@ Profiles REST API optimized for Android Java
 
 ### Documentation
 
-[How-to: Integrate Profiles RestClient in Android](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/profiles-restclient/HOWTO-INTEGRATE.md "How-to: Integrate Profiles RestClient in Android")
+ - [How-to: Integrate Profiles RestClient in Android](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/profiles-restclient/HOWTO-INTEGRATE.md "How-to: Integrate Profiles RestClient in Android")
+ - [How-to: Verify a NXP NTAG Signature with Profiles RestClient](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/profiles-restclient/HOWTO-VERIFYNXP.md "How-to: Verify a NXP NTAG Signature with Profiles RestClient")
 
 ## SMART COSMOS Utility for Android
 Support library for SMART COSMOS SDKs
