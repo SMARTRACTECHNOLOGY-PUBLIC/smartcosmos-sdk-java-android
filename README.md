@@ -1,10 +1,10 @@
 ![SMART COSMOS](https://s3-eu-west-1.amazonaws.com/api.smart-cosmos.com/images/smartcosmos.png)
 
 # SMART COSMOS SDK Java for Android
-This GitHub repo contains the SMART COSMOS SDK Java for Android.
+This repository contains the SMART COSMOS SDK Java for Android.
 
 ## SMART COSMOS Profiles RestClient
-Profiles REST API optimized for Android Java
+SMART COSMOS Profiles REST API optimized for Android Java
 
 ### Dependencies
 
@@ -16,6 +16,12 @@ Profiles REST API optimized for Android Java
 
  - [How-to: Integrate Profiles RestClient in Android](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/profiles-restclient/HOWTO-INTEGRATE.md "How-to: Integrate Profiles RestClient in Android")
  - [How-to: Verify a NXP NTAG Signature with Profiles RestClient](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/profiles-restclient/HOWTO-VERIFYNXP.md "How-to: Verify a NXP NTAG Signature with Profiles RestClient")
+
+### Useful links
+
+ - [SMART COSMOS API Documentation](https://api.smartcosmos.net)
+ - [SMART COSMOS Profiles in the Partner Development Portal](http://partner.smart-cosmos.com/site/global/platform/embed_profiles/index.gsp)
+- [SMART COSMOS Lessons](http://lessons.smart-cosmos.com)
 
 ## SMART COSMOS Utility for Android
 Support library for SMART COSMOS SDKs
