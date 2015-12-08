@@ -48,8 +48,7 @@ public class AsciiHexConverter {
 	    return new String(hexChars);
 	}	
 	
-	public static byte[] hexToBytes(String s)
-	{
+	public static byte[] hexToBytes(String s) {
 		int len = s.length();
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2)
