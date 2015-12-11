@@ -24,6 +24,8 @@ package net.smartcosmos.android;
  */
 
 
+import java.util.HashMap;
+import java.util.Map;
 import retrofit.RestAdapter;
 
 import android.util.Base64;
@@ -52,6 +54,7 @@ import net.smartcosmos.android.ProfilesRestApi.ValidateAuthOtpResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetVerificationMessageResponse;
 import net.smartcosmos.android.ProfilesRestApi.PostGetVerificationMessage;
 import net.smartcosmos.android.ProfilesRestApi.GetTagTdnResponse;
+import net.smartcosmos.android.ProfilesRestApi.GetQueryTagsResponse;
 
 import net.smartcosmos.android.utility.AsciiHexConverter;
 import net.smartcosmos.android.utility.Rfc6238;
@@ -190,6 +193,32 @@ public class ProfilesRestClient {
         Log.d(TAG, "getTagTdn: HTTP " + ret.httpStatus +
                    ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
+    }
+
+    /**
+     * Look up an array of all tag ids which match the given criterias.
+     *
+     * @param propertyMap   map of tag properties as search criteria (incl. max count of results)
+     * @return matching Tag IDs
+     * @throws Exception
+     */
+    public String[] getTagsByProperties(Map<ProfilesQueryTagProperties, Object> propertyMap)
+            throws Exception
+    {
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            GetQueryTagsResponse tags = client.getQueryTags(propertyMap);
+            if (tags.code == 0)
+                return tags.tagIds;
+        }
+        catch (RuntimeException ex) {
+            ProfilesRestResult prr = parseErrorResponse(ex);
+            String sError = "getTagsByProperties: HTTP " + prr.httpStatus +
+                       ", code = " + prr.iCode + ", message = " + prr.sMessage;
+            Log.d(TAG, sError);
+            throw new Exception(sError);
+        }
+        return null;
     }
 
     /**

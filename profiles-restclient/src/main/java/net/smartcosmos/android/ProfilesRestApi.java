@@ -24,11 +24,13 @@ package net.smartcosmos.android;
  */
 
 
+import java.util.Map;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.QueryMap;
 
 public class ProfilesRestApi {
 
@@ -40,6 +42,9 @@ public class ProfilesRestApi {
 
         @GET("/rest/tag/tdn/{tagId}")
         GetTagTdnResponse getTagTdn(@Path("tagId") String tagId);
+
+        @GET("/rest/tag/query")
+        GetQueryTagsResponse getQueryTags(@QueryMap Map<ProfilesQueryTagProperties, Object> queryParams);
 
         @POST("/rest/tag/key")
         GetTagKeyResponse postGetTagKey(@Body PostGetTagKey pGtk);
@@ -77,6 +82,11 @@ public class ProfilesRestApi {
     public static class GetTagTdnResponse {
         int code;
         String value;
+    }
+
+    public static class GetQueryTagsResponse {
+        int code;
+        String[] tagIds;
     }
 
     public static class PostGetTagKey {
