@@ -27,30 +27,8 @@ package net.smartcosmos.android;
 public enum ProfilesQueryTagProperties
 {
     count,
-    customerPO
-
-    /* rfu
-    custId,
-    orderId,
-    orderDate,
-    orderQty,
-    orderQtyU,
-    //customerPO,
-    customerName,
-    supplPO,
-    delivId,
-    delivDate,
-    delivQty,
-    delivQtyU,
-    batchId,
-    yield,
-    subRoll,
-    plantId,
-    chipManuf,
-    chipModel,
-    inlayType,
-    inlayManufDate,
-    attenuation,
-    checkState
-    */
+    Batch,
+    customerPO,
+    Delivery,
+    Order
 }
