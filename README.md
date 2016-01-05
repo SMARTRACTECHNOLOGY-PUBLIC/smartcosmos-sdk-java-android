@@ -28,6 +28,7 @@ Support library for SMART COSMOS SDKs
 
  - OTP Calculation (RFC 6238)
  - AsciiHex Conversion
+ - Intent launcher (allows to open URLs, new emails, etc.)
 
 ## Join SMART COSMOS
 Are you ready to become part of creating something really big? With SMART COSMOS
