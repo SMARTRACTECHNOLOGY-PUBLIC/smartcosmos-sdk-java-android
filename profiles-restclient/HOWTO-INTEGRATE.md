@@ -21,10 +21,10 @@ To enable network access for the client app, the app requires internet access. A
 
 Add following library files to the /libs folder (version numbers may vary):
 
- - utility-1.0.jar (Run **mvn clean install** to create the jar) 
- - profiles-restclient-1.1.jar (Run **mvn clean install** to create the jar)
+ - utility-1.2.jar (Run **mvn clean install** to create the jar) 
+ - profiles-restclient-1.2.jar (Run **mvn clean install** to create the jar)
  - retrofit-1.9.0.jar (Maven [link](http://mvnrepository.com/artifact/com.squareup.retrofit/retrofit "RetroFit in Maven"))
- - gson-2.4.jar (Maven [link](http://mvnrepository.com/artifact/com.google.code.gson/gson "GSON in Maven"))
+ - gson-2.5.jar (Maven [link](http://mvnrepository.com/artifact/com.google.code.gson/gson "GSON in Maven"))
 
 Notes:
 

@@ -1,15 +1,14 @@
-# Profiles RestClient for Android Changelog
+# SMART COSMOS Utility for Android Changelog
 
 ## Version History
 
 ### 1.2
 
- - Support added to look up Tag IDs by Customer PO and other properties
+ - IntentLauncher added to provide an easy way for starting other apps
 
 ### 1.1
 
- - Profiles RestClient for Android became Open Source
- - Apache License added
+ - AsciiHexConverter upgraded with reverse byte order conversion
 
 ### 1.0
 
