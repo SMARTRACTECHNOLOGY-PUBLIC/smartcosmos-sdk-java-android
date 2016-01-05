@@ -44,7 +44,7 @@ public class ProfilesRestApi {
         GetTagTdnResponse getTagTdn(@Path("tagId") String tagId);
 
         @GET("/rest/tag/query")
-        GetQueryTagsResponse getQueryTags(@QueryMap Map<ProfilesQueryTagProperties, Object> queryParams);
+        GetQueryTagsResponse getQueryTags(@QueryMap Map<ProfilesQueryTagProperty, Object> queryParams);
 
         @POST("/rest/tag/key")
         GetTagKeyResponse postGetTagKey(@Body PostGetTagKey pGtk);

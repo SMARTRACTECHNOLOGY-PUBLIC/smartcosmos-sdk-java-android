@@ -24,7 +24,6 @@ package net.smartcosmos.android;
  */
 
 
-import java.util.HashMap;
 import java.util.Map;
 import retrofit.RestAdapter;
 
@@ -202,7 +201,7 @@ public class ProfilesRestClient {
      * @return matching Tag IDs
      * @throws Exception
      */
-    public String[] getTagsByProperties(Map<ProfilesQueryTagProperties, Object> propertyMap)
+    public String[] getTagsByProperties(Map<ProfilesQueryTagProperty, Object> propertyMap)
             throws Exception
     {
         try {
