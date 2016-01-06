@@ -1,10 +1,10 @@
-package net.smartcosmos.android.utility;
+package net.smartcosmos.android;
 
 /*
  * *#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
- * SMARTRAC Utility SDK for Android
+ * SMART COSMOS Profiles RestClient for Android
  * ===============================================================================
- * Copyright (C) 2015 - 2016 Smartrac Technology Fletcher, Inc.
+ * Copyright (C) 2015 Smartrac Technology Fletcher, Inc.
  * ===============================================================================
  * SMART COSMOS SDK
  * (C) Copyright 2015, Smartrac Technology Fletcher, Inc.
@@ -24,25 +24,16 @@ package net.smartcosmos.android.utility;
  */
 
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+public enum ProfilesQueryTagProperty
+{
+    count,
+    Batch,
+    customerPO,
+    Delivery,
+    Order;
 
-public class Secure {
-	
-	public static String getSHA2String(String rawtext) {
-		MessageDigest digest = null;
-		try {
-			digest = MessageDigest.getInstance("SHA-256");
-		} catch (NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			digest.update(rawtext.getBytes("UTF8"));
-		} catch (UnsupportedEncodingException e2) {
-			e2.printStackTrace();
-			digest = null;
-		}
-		return AsciiHexConverter.bytesToHex(digest.digest());
-	}
+    public static ProfilesQueryTagProperty parseProfilesQueryTagProperty(String value)
+        throws IllegalArgumentException, NullPointerException {
+            return valueOf(ProfilesQueryTagProperty.class, value);
+    }
 }

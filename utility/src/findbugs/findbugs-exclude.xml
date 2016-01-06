@@ -15,6 +15,9 @@
 <FindBugsFilter>
 
     <Class name="net.smartcosmos.android.utility.Secure"/>
+    <Bug pattern="REC_CATCH_EXCEPTION"/>
+
+    <Class name="net.smartcosmos.android.utility.Secure"/>
     <Bug pattern="NP_NULL_ON_SOME_PATH"/>
 
 </FindBugsFilter>

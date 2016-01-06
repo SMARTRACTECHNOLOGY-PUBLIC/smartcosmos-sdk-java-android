@@ -4,7 +4,7 @@ package net.smartcosmos.android.utility;
  * *#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
  * SMARTRAC Utility SDK for Android
  * ===============================================================================
- * Copyright (C) 2015 Smartrac Technology Fletcher, Inc.
+ * Copyright (C) 2015 - 2016 Smartrac Technology Fletcher, Inc.
  * ===============================================================================
  * SMART COSMOS SDK
  * (C) Copyright 2015, Smartrac Technology Fletcher, Inc.
@@ -22,7 +22,6 @@ package net.smartcosmos.android.utility;
  * limitations under the License.
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
-
 
 
 import javax.crypto.Mac;
