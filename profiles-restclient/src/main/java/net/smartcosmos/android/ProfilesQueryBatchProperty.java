@@ -28,7 +28,7 @@ public enum ProfilesQueryBatchProperty
 {
     count,
     customerPO,
-    delivery,
+    delivId,
     orderId;
 
     public static ProfilesQueryBatchProperty parseProfilesQueryBatchProperty(String value)
