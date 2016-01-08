@@ -89,7 +89,7 @@ public class ProfilesRestApi {
 
     public static class GetQueryBatchesResponse {
         int code;
-        String[] batchIds;
+        String[] batchUrns;
     }
 
     public static class GetQueryTagsResponse {

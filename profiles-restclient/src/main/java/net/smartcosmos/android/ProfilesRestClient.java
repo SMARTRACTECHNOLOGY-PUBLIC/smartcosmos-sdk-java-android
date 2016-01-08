@@ -199,7 +199,7 @@ public class ProfilesRestClient {
      * Look up an array of all batches which match the given criterias.
      *
      * @param propertyMap   map of batch properties as search criteria (incl. max count of results)
-     * @return matching Batch IDs
+     * @return matching Batch URNs
      * @throws Exception
      */
     public String[] getBatchesByProperties(Map<ProfilesQueryBatchProperty, Object> propertyMap)
@@ -209,7 +209,7 @@ public class ProfilesRestClient {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetQueryBatchesResponse batches = client.getQueryBatches(propertyMap);
             if (batches.code == 0)
-                return batches.batchIds;
+                return batches.batchUrns;
         }
         catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
