@@ -2,6 +2,10 @@
 
 ## Version History
 
+### 1.3
+
+ - Fixed Javadoc creation problem on JDK < 8
+
 ### 1.2
 
  - IntentLauncher added to provide an easy way for starting other apps
