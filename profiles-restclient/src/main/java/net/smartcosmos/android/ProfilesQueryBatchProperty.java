@@ -24,13 +24,15 @@ package net.smartcosmos.android;
  */
 
 
-public enum ProfilesQueryTagProperty
+public enum ProfilesQueryBatchProperty
 {
     count,
-    batchUrn;
+    customerPO,
+    delivId,
+    orderId;
 
-    public static ProfilesQueryTagProperty parseProfilesQueryTagProperty(String value)
+    public static ProfilesQueryBatchProperty parseProfilesQueryBatchProperty(String value)
         throws IllegalArgumentException, NullPointerException {
-            return valueOf(ProfilesQueryTagProperty.class, value);
+            return valueOf(ProfilesQueryBatchProperty.class, value);
     }
 }

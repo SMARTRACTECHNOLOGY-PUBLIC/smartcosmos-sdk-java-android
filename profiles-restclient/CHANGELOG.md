@@ -2,6 +2,12 @@
 
 ## Version History
 
+### 1.3
+
+ - Support for new endpoint to look up batches by Customer PO and other properties
+ - Look up Tag ID is now restricted to use the parameter "Batch" only
+ - Fixed Javadoc creation problem on JDK < 8
+
 ### 1.2
 
  - Support added to look up Tag IDs by Customer PO and other properties

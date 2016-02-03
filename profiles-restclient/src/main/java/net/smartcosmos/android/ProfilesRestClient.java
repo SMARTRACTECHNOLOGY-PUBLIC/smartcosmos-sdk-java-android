@@ -53,6 +53,7 @@ import net.smartcosmos.android.ProfilesRestApi.ValidateAuthOtpResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetVerificationMessageResponse;
 import net.smartcosmos.android.ProfilesRestApi.PostGetVerificationMessage;
 import net.smartcosmos.android.ProfilesRestApi.GetTagTdnResponse;
+import net.smartcosmos.android.ProfilesRestApi.GetQueryBatchesResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetQueryTagsResponse;
 
 import net.smartcosmos.android.utility.AsciiHexConverter;
@@ -192,6 +193,32 @@ public class ProfilesRestClient {
         Log.d(TAG, "getTagTdn: HTTP " + ret.httpStatus +
                    ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
+    }
+
+    /**
+     * Look up an array of all batches which match the given criterias.
+     *
+     * @param propertyMap   map of batch properties as search criteria (incl. max count of results)
+     * @return matching Batch URNs
+     * @throws Exception
+     */
+    public String[] getBatchesByProperties(Map<ProfilesQueryBatchProperty, Object> propertyMap)
+            throws Exception
+    {
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            GetQueryBatchesResponse batches = client.getQueryBatches(propertyMap);
+            if (batches.code == 0)
+                return batches.batchUrns;
+        }
+        catch (RuntimeException ex) {
+            ProfilesRestResult prr = parseErrorResponse(ex);
+            String sError = "getBatchesByProperties: HTTP " + prr.httpStatus +
+                       ", code = " + prr.iCode + ", message = " + prr.sMessage;
+            Log.d(TAG, sError);
+            throw new Exception(sError);
+        }
+        return null;
     }
 
     /**

@@ -43,7 +43,10 @@ public class ProfilesRestApi {
         @GET("/rest/tag/tdn/{tagId}")
         GetTagTdnResponse getTagTdn(@Path("tagId") String tagId);
 
-        @GET("/rest/tag/query")
+        @GET("/rest/tag/queryBatches")
+        GetQueryBatchesResponse getQueryBatches(@QueryMap Map<ProfilesQueryBatchProperty, Object> queryParams);
+
+        @GET("/rest/tag/queryTags")
         GetQueryTagsResponse getQueryTags(@QueryMap Map<ProfilesQueryTagProperty, Object> queryParams);
 
         @POST("/rest/tag/key")
@@ -82,6 +85,11 @@ public class ProfilesRestApi {
     public static class GetTagTdnResponse {
         int code;
         String value;
+    }
+
+    public static class GetQueryBatchesResponse {
+        int code;
+        String[] batchUrns;
     }
 
     public static class GetQueryTagsResponse {
