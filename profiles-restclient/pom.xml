@@ -6,7 +6,7 @@
 
     <groupId>net.smartcosmos.android</groupId>
     <artifactId>profiles-restclient</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
 
     <name>SMART COSMOS Profiles RestClient for Android</name>
     <description>Utility API for Android</description>
@@ -75,7 +75,7 @@
         <dependency>
             <groupId>net.smartcosmos.android</groupId>
             <artifactId>utility</artifactId>
-            <version>1.3-SNAPSHOT</version>
+            <version>1.4-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
