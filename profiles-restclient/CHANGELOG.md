@@ -2,6 +2,10 @@
 
 ## Version History
 
+### 1.4
+
+ - Enable import of new tags by using the transaction handler
+
 ### 1.3
 
  - Support for new endpoint to look up batches by Customer PO and other properties
