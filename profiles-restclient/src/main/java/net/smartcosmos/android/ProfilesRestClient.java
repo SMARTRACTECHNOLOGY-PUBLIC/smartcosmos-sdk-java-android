@@ -61,6 +61,8 @@ import net.smartcosmos.android.utility.Rfc6238;
 
 public class ProfilesRestClient {
 
+    static final String IMPORT_HANDLER = "defaultTransactionHandler";
+
     private String _sServer;
     private String _sUser;
     private String _sPassword;
@@ -568,5 +570,33 @@ public class ProfilesRestClient {
             throw new Exception(sError);
         }
         return null;
+    }
+
+    /**
+     * Import large data sets into Profiles
+     *
+     * @param profilesTransactionRequest
+     * @return ProfilesRestResult
+     *			.httpStatus: HTTP Status of the request or negative value in case of network error
+     *			.iCode = 0 if successful
+     *			.sMessage = status message
+     */
+    public ProfilesRestResult importProfilesData(ProfilesTransactionRequest profilesTransactionRequest)
+    {
+        ProfilesRestResult ret = new ProfilesRestResult();
+
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            ProfilesErrorResponse resp = client.postTransaction(IMPORT_HANDLER, profilesTransactionRequest);
+            ret.httpStatus = 200;
+            ret.iCode = resp.code;
+            ret.sMessage = resp.message;
+        }
+        catch (RuntimeException ex) {
+            ret = parseErrorResponse(ex);
+        }
+        Log.d(TAG, "importProfilesData: HTTP " + ret.httpStatus +
+                ", code = " + ret.iCode + ", message = " + ret.sMessage);
+        return ret;
     }
 }

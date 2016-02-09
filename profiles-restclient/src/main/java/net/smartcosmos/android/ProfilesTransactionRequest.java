@@ -23,6 +23,8 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
+import net.smartcosmos.android.utility.AsciiHexConverter;
+
 import java.util.Map;
 
 public class ProfilesTransactionRequest {
@@ -47,6 +49,10 @@ public class ProfilesTransactionRequest {
         metadata = new MetadataEntity[0];
     }
 
+    public void addTag(byte[] uid) {
+        addTag(AsciiHexConverter.bytesToHex(uid));
+    }
+
     public void addTag(String tagId) {
         ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + 1];
         System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
@@ -54,6 +60,11 @@ public class ProfilesTransactionRequest {
         tmpObjects[objects.length].type = TAG_TYPE;
         tmpObjects[objects.length].name = tagId;
         objects = tmpObjects.clone();
+    }
+
+    public void addTagData(byte[] uid, Map<String, String> keyValueMap)
+            throws IllegalArgumentException {
+        addTagData(AsciiHexConverter.bytesToHex(uid), keyValueMap);
     }
 
     public void addTagData(String tagId, Map<String, String> keyValueMap)

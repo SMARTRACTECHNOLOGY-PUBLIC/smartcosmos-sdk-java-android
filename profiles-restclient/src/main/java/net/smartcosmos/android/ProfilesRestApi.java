@@ -72,6 +72,11 @@ public class ProfilesRestApi {
 
         @POST("/rest/verification/tags")
         GetVerificationTagsResponse postGetVerificationTags (@Body PostGetVerificationTags pGvt);
+
+        @POST("/rest/transaction/{handler}")
+        ProfilesErrorResponse postTransaction (
+                @Path("handler") String handler,
+                @Body ProfilesTransactionRequest profilesTransactionRequest);
     }
 
     // Standard response object for all HTTP 4xx responses  
