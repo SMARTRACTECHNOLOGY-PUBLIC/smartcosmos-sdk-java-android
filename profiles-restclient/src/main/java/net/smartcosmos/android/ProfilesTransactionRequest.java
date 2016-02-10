@@ -52,12 +52,11 @@ public class ProfilesTransactionRequest {
     }
 
     public void addBatch(String batchId) {
-        ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + 1];
-        System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
-        tmpObjects[objects.length].objectUrn = PREFIX_BATCH + batchId;
-        tmpObjects[objects.length].type = TYPE_BATCH;
-        tmpObjects[objects.length].name = batchId;
-        objects = tmpObjects.clone();
+        ObjectEntity[] batchObjects = new ObjectEntity[1];
+        batchObjects[0].objectUrn = PREFIX_BATCH + batchId;
+        batchObjects[0].type = TYPE_BATCH;
+        batchObjects[0].name = batchId;
+        addObjects(batchObjects);
     }
 
     public void addTag(String batchId, byte[] uid)
@@ -78,21 +77,19 @@ public class ProfilesTransactionRequest {
             throw new IllegalArgumentException("Cannot add tag to absent batch " + batchId + ".");
         }
 
-        ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + 1];
-        System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
-        tmpObjects[objects.length].objectUrn = PREFIX_TAG + tagId;
-        tmpObjects[objects.length].type = TYPE_TAG;
-        tmpObjects[objects.length].name = tagId;
-        objects = tmpObjects.clone();
+        ObjectEntity[] tagObjects = new ObjectEntity[1];
+        tagObjects[0].objectUrn = PREFIX_TAG + tagId;
+        tagObjects[0].type = TYPE_TAG;
+        tagObjects[0].name = tagId;
+        addObjects(tagObjects);
 
-        RelationshipEntity[] tmpRelationships = new RelationshipEntity[relationships.length + 1];
-        System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length + 1);
-        tmpRelationships[tmpRelationships.length].entityReferenceType = ProfilesEntityReferenceType.Object;
-        tmpRelationships[tmpRelationships.length].referenceUrn = TYPE_BATCH;
-        tmpRelationships[tmpRelationships.length].type = "contains";
-        tmpRelationships[tmpRelationships.length].relatedEntityReferenceType = ProfilesEntityReferenceType.Object;
-        tmpRelationships[tmpRelationships.length].relatedReferenceUrn = PREFIX_TAG + tagId;
-        relationships = tmpRelationships.clone();
+        RelationshipEntity[] tagRelationships = new RelationshipEntity[1];
+        tagRelationships[0].entityReferenceType = ProfilesEntityReferenceType.Object;
+        tagRelationships[0].referenceUrn = TYPE_BATCH;
+        tagRelationships[0].type = "contains";
+        tagRelationships[0].relatedEntityReferenceType = ProfilesEntityReferenceType.Object;
+        tagRelationships[0].relatedReferenceUrn = PREFIX_TAG + tagId;
+        addRelationships(tagRelationships);
     }
 
     public void addTagData(byte[] uid, Map<String, String> keyValueMap)
@@ -112,16 +109,44 @@ public class ProfilesTransactionRequest {
         if (!validTagId) {
             throw new IllegalArgumentException("Cannot add data to absent tag " + tagId + ".");
         }
-        MetadataEntity[] tmpMetadata = new MetadataEntity[metadata.length + keyValueMap.size()];
-        System.arraycopy(metadata, 0, tmpMetadata, 0, metadata.length);
-        int i = metadata.length;
+        MetadataEntity[] tagMetadata = new MetadataEntity[metadata.length + keyValueMap.size()];
+        int i = 0;
         for (Map.Entry<String, String > entry : keyValueMap.entrySet()) {
-            tmpMetadata[i].entityReferenceType = ProfilesEntityReferenceType.Object;
-            tmpMetadata[i].referenceUrn = PREFIX_TAG + tagId;
-            tmpMetadata[i].dataType = DATATYPE_STRING;
-            tmpMetadata[i].key = entry.getKey();
-            tmpMetadata[i].value = entry.getValue();
+            tagMetadata[i].entityReferenceType = ProfilesEntityReferenceType.Object;
+            tagMetadata[i].referenceUrn = PREFIX_TAG + tagId;
+            tagMetadata[i].dataType = DATATYPE_STRING;
+            tagMetadata[i].key = entry.getKey();
+            tagMetadata[i].value = entry.getValue();
+            i++;
         }
+        addMetadata(tagMetadata);
+    }
+
+    public void addObjects(ObjectEntity[] newObjects) {
+        ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + newObjects.length];
+        System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
+        System.arraycopy(newObjects, 0, tmpObjects, objects.length, newObjects.length);
+        objects = tmpObjects.clone();
+    }
+
+    public void addObjectAddresses(AddressEntity[] newAddresses) {
+        AddressEntity[] tmpAddresses = new AddressEntity[objectAddresses.length + newAddresses.length];
+        System.arraycopy(objectAddresses, 0, tmpAddresses, 0, objectAddresses.length);
+        System.arraycopy(newAddresses, 0, tmpAddresses, objectAddresses.length, newAddresses.length);
+        objectAddresses = tmpAddresses.clone();
+    }
+
+    public void addRelationships(RelationshipEntity[] newRelationships) {
+        RelationshipEntity[] tmpRelationships = new RelationshipEntity[relationships.length + newRelationships.length];
+        System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
+        System.arraycopy(newRelationships, 0, tmpRelationships, relationships.length, newRelationships.length);
+        relationships = tmpRelationships.clone();
+    }
+
+    public void addMetadata(MetadataEntity[] newMetadata) {
+        MetadataEntity[] tmpMetadata = new MetadataEntity[metadata.length + newMetadata.length];
+        System.arraycopy(metadata, 0, tmpMetadata, 0, metadata.length);
+        System.arraycopy(newMetadata, 0, tmpMetadata, metadata.length, newMetadata.length);
         metadata = tmpMetadata.clone();
     }
 
