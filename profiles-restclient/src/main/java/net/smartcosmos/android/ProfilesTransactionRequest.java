@@ -30,8 +30,10 @@ import java.util.Map;
 public class ProfilesTransactionRequest {
 
     static final String DATATYPE_STRING = "StringType";
-    static final String TAG_PREFIX = "urn:uuid:smartrac-group:tag:";
-    static final String TAG_TYPE = "Tag";
+    static final String PREFIX_BATCH = "urn:uuid:smartrac-group:batch:";
+    static final String TYPE_BATCH = "Batch";
+    static final String PREFIX_TAG = "urn:uuid:smartrac-group:tag:";
+    static final String TYPE_TAG = "Tag";
 
     private AccountEntity account;
     private ObjectEntity[] objects;
@@ -49,17 +51,48 @@ public class ProfilesTransactionRequest {
         metadata = new MetadataEntity[0];
     }
 
-    public void addTag(byte[] uid) {
-        addTag(AsciiHexConverter.bytesToHex(uid));
-    }
-
-    public void addTag(String tagId) {
+    public void addBatch(String batchId) {
         ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + 1];
         System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
-        tmpObjects[objects.length].objectUrn = TAG_PREFIX + tagId;
-        tmpObjects[objects.length].type = TAG_TYPE;
+        tmpObjects[objects.length].objectUrn = PREFIX_BATCH + batchId;
+        tmpObjects[objects.length].type = TYPE_BATCH;
+        tmpObjects[objects.length].name = batchId;
+        objects = tmpObjects.clone();
+    }
+
+    public void addTag(String batchId, byte[] uid)
+            throws IllegalArgumentException {
+        addTag(batchId, AsciiHexConverter.bytesToHex(uid));
+    }
+
+    public void addTag(String batchId, String tagId)
+            throws IllegalArgumentException {
+        boolean validBatchId = false;
+        for (ObjectEntity o : objects) {
+            if (o.objectUrn.equalsIgnoreCase(PREFIX_BATCH + batchId)) {
+                validBatchId = true;
+                break;
+            }
+        }
+        if (!validBatchId) {
+            throw new IllegalArgumentException("Cannot add tag to absent batch " + batchId + ".");
+        }
+
+        ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + 1];
+        System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
+        tmpObjects[objects.length].objectUrn = PREFIX_TAG + tagId;
+        tmpObjects[objects.length].type = TYPE_TAG;
         tmpObjects[objects.length].name = tagId;
         objects = tmpObjects.clone();
+
+        RelationshipEntity[] tmpRelationships = new RelationshipEntity[relationships.length + 1];
+        System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length + 1);
+        tmpRelationships[tmpRelationships.length].entityReferenceType = ProfilesEntityReferenceType.Object;
+        tmpRelationships[tmpRelationships.length].referenceUrn = TYPE_BATCH;
+        tmpRelationships[tmpRelationships.length].type = "contains";
+        tmpRelationships[tmpRelationships.length].relatedEntityReferenceType = ProfilesEntityReferenceType.Object;
+        tmpRelationships[tmpRelationships.length].relatedReferenceUrn = PREFIX_TAG + tagId;
+        relationships = tmpRelationships.clone();
     }
 
     public void addTagData(byte[] uid, Map<String, String> keyValueMap)
@@ -71,20 +104,20 @@ public class ProfilesTransactionRequest {
             throws IllegalArgumentException {
         boolean validTagId = false;
         for (ObjectEntity o : objects) {
-            if (o.objectUrn.equalsIgnoreCase(TAG_PREFIX + tagId)) {
+            if (o.objectUrn.equalsIgnoreCase(PREFIX_TAG + tagId)) {
                 validTagId = true;
                 break;
             }
         }
         if (!validTagId) {
-            throw new IllegalArgumentException("Cannot add data to absent tag "+ tagId + ".");
+            throw new IllegalArgumentException("Cannot add data to absent tag " + tagId + ".");
         }
         MetadataEntity[] tmpMetadata = new MetadataEntity[metadata.length + keyValueMap.size()];
         System.arraycopy(metadata, 0, tmpMetadata, 0, metadata.length);
         int i = metadata.length;
         for (Map.Entry<String, String > entry : keyValueMap.entrySet()) {
             tmpMetadata[i].entityReferenceType = ProfilesEntityReferenceType.Object;
-            tmpMetadata[i].referenceUrn = TAG_PREFIX + tagId;
+            tmpMetadata[i].referenceUrn = PREFIX_TAG + tagId;
             tmpMetadata[i].dataType = DATATYPE_STRING;
             tmpMetadata[i].key = entry.getKey();
             tmpMetadata[i].value = entry.getValue();
@@ -124,6 +157,14 @@ public class ProfilesTransactionRequest {
     }
 
     public static class AddressEntity {
+        public String objectUrn;
+        public String type;
+        public String line1;
+        public String line2;
+        public String stateProvince;
+        public String countryAbbreviation;
+        public String city;
+        public String postalCode;
     }
 
     public static class RelationshipEntity {

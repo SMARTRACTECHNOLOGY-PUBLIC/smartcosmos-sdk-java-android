@@ -24,5 +24,6 @@ package net.smartcosmos.android;
  */
 
 public enum ProfilesEntityReferenceType {
-    Object;
+    Object,
+    ObjectAddress;
 }
