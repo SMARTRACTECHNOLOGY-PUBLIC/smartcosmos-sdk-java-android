@@ -53,6 +53,7 @@ public class ProfilesTransactionRequest {
 
     public void addBatch(String batchId) {
         ObjectEntity[] batchObjects = new ObjectEntity[1];
+        batchObjects[0] = new ObjectEntity();
         batchObjects[0].objectUrn = PREFIX_BATCH + batchId;
         batchObjects[0].type = TYPE_BATCH;
         batchObjects[0].name = batchId;
@@ -78,12 +79,14 @@ public class ProfilesTransactionRequest {
         }
 
         ObjectEntity[] tagObjects = new ObjectEntity[1];
+        tagObjects[0] = new ObjectEntity();
         tagObjects[0].objectUrn = PREFIX_TAG + tagId;
         tagObjects[0].type = TYPE_TAG;
         tagObjects[0].name = tagId;
         addObjects(tagObjects);
 
         RelationshipEntity[] tagRelationships = new RelationshipEntity[1];
+        tagRelationships[0] = new RelationshipEntity();
         tagRelationships[0].entityReferenceType = ProfilesEntityReferenceType.Object;
         tagRelationships[0].referenceUrn = TYPE_BATCH;
         tagRelationships[0].type = "contains";
@@ -112,6 +115,7 @@ public class ProfilesTransactionRequest {
         MetadataEntity[] tagMetadata = new MetadataEntity[metadata.length + keyValueMap.size()];
         int i = 0;
         for (Map.Entry<String, String > entry : keyValueMap.entrySet()) {
+            tagMetadata[i] = new MetadataEntity();
             tagMetadata[i].entityReferenceType = ProfilesEntityReferenceType.Object;
             tagMetadata[i].referenceUrn = PREFIX_TAG + tagId;
             tagMetadata[i].dataType = DATATYPE_STRING;
@@ -171,40 +175,40 @@ public class ProfilesTransactionRequest {
     }
 
     public static class AccountEntity {
-        public String name;
-        public String moniker;
+        String name;
+        String moniker;
     }
 
     public static class ObjectEntity {
-        public String objectUrn;
-        public String type;
-        public String name;
+        String objectUrn;
+        String type;
+        String name;
     }
 
     public static class AddressEntity {
-        public String objectUrn;
-        public String type;
-        public String line1;
-        public String line2;
-        public String stateProvince;
-        public String countryAbbreviation;
-        public String city;
-        public String postalCode;
+        String objectUrn;
+        String type;
+        String line1;
+        String line2;
+        String stateProvince;
+        String countryAbbreviation;
+        String city;
+        String postalCode;
     }
 
     public static class RelationshipEntity {
-        public ProfilesEntityReferenceType entityReferenceType;
-        public String referenceUrn;
-        public String type;
-        public ProfilesEntityReferenceType relatedEntityReferenceType;
-        public String relatedReferenceUrn;
+        ProfilesEntityReferenceType entityReferenceType;
+        String referenceUrn;
+        String type;
+        ProfilesEntityReferenceType relatedEntityReferenceType;
+        String relatedReferenceUrn;
     }
 
     public static class MetadataEntity {
-        public String value;
-        public ProfilesEntityReferenceType entityReferenceType;
-        public String referenceUrn;
-        public String dataType;
-        public String key;
+        String value;
+        ProfilesEntityReferenceType entityReferenceType;
+        String referenceUrn;
+        String dataType;
+        String key;
     }
 }

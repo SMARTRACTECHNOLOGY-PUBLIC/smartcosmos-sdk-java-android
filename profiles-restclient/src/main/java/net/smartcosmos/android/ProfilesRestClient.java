@@ -587,7 +587,8 @@ public class ProfilesRestClient {
 
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
-            ProfilesErrorResponse resp = client.postTransaction(IMPORT_HANDLER, profilesTransactionRequest);
+            ProfilesErrorResponse resp = client.postTransaction(IMPORT_HANDLER,
+                    new ProfilesTransactionRequest[] {profilesTransactionRequest});
             ret.httpStatus = 200;
             ret.iCode = resp.code;
             ret.sMessage = resp.message;

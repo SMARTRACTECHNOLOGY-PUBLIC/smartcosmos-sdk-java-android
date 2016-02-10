@@ -76,7 +76,7 @@ public class ProfilesRestApi {
         @POST("/rest/transaction/{handler}")
         ProfilesErrorResponse postTransaction (
                 @Path("handler") String handler,
-                @Body ProfilesTransactionRequest profilesTransactionRequest);
+                @Body ProfilesTransactionRequest[] profilesTransactionRequest);
     }
 
     // Standard response object for all HTTP 4xx responses  
