@@ -27,9 +27,23 @@ package net.smartcosmos.android.utility;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class Secure {
-	
+
+    /**
+     * Create a random byte blob with given length.
+     *
+     * @param length
+     * @return random bytes
+     */
+	public static byte[] getRandomBytes(int length) {
+		SecureRandom sr = new SecureRandom();
+		byte[] output = new byte[length];
+        sr.nextBytes(output);
+        return output.clone();
+	}
+
 	public static String getSHA2String(String rawtext) {
 		MessageDigest digest = null;
 		try {

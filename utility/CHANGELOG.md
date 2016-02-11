@@ -2,6 +2,10 @@
 
 ## Version History
 
+### 1.4
+
+ - Added RNG in Secure.getRandomBytes(length)
+
 ### 1.3
 
  - Fixed Javadoc creation problem on JDK < 8
