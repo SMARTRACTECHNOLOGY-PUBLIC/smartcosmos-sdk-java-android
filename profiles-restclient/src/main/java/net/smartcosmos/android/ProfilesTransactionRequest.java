@@ -88,7 +88,7 @@ public class ProfilesTransactionRequest {
         RelationshipEntity[] tagRelationships = new RelationshipEntity[1];
         tagRelationships[0] = new RelationshipEntity();
         tagRelationships[0].entityReferenceType = ProfilesEntityReferenceType.Object;
-        tagRelationships[0].referenceUrn = TYPE_BATCH;
+        tagRelationships[0].referenceUrn = PREFIX_BATCH + batchId;
         tagRelationships[0].type = "contains";
         tagRelationships[0].relatedEntityReferenceType = ProfilesEntityReferenceType.Object;
         tagRelationships[0].relatedReferenceUrn = PREFIX_TAG + tagId;
