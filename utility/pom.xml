@@ -6,11 +6,11 @@
 
     <groupId>net.smartcosmos.android</groupId>
     <artifactId>utility</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
 
     <name>SMARTRAC Utility SDK for Android</name>
     <description>Utility API for Android</description>
-    <inceptionYear>2015</inceptionYear>
+    <inceptionYear>2016</inceptionYear>
     <url>https://www.smart-cosmos.com</url>
     <organization>
         <name>Smartrac Technology Fletcher, Inc.</name>
@@ -21,7 +21,7 @@
             <name>Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
             <distribution>repo</distribution>
-            <comments>Copyright (C) 2013 - 2015 Smartrac Technology Fletcher, Inc.</comments>
+            <comments>Copyright (C) 2013 - 2016 Smartrac Technology Fletcher, Inc.</comments>
         </license>
     </licenses>
     <developers>
