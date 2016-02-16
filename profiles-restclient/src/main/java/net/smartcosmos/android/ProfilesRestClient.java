@@ -578,7 +578,7 @@ public class ProfilesRestClient {
      * @param profilesTransactionRequest
      * @return ProfilesRestResult
      *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
+     *			.iCode = 1 if successful
      *			.sMessage = status message
      */
     public ProfilesRestResult importProfilesData(ProfilesTransactionRequest profilesTransactionRequest)

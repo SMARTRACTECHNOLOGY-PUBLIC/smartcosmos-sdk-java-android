@@ -41,6 +41,11 @@ public class ProfilesTransactionRequest {
     private RelationshipEntity[] relationships;
     private MetadataEntity[] metadata;
 
+    /**
+     * Creates a new transaction request to import data into Profiles.
+     *
+     * @param accountDomain account which the import data belongs to
+     */
     public ProfilesTransactionRequest(String accountDomain) {
         account = new AccountEntity();
         account.name = accountDomain;
@@ -51,6 +56,11 @@ public class ProfilesTransactionRequest {
         metadata = new MetadataEntity[0];
     }
 
+    /**
+     * Add a new batch to the import request.
+     *
+     * @param batchId Production batch ID
+     */
     public void addBatch(String batchId) {
         ObjectEntity[] batchObjects = new ObjectEntity[1];
         batchObjects[0] = new ObjectEntity();
@@ -60,11 +70,25 @@ public class ProfilesTransactionRequest {
         addObjects(batchObjects);
     }
 
+    /**
+     * Add a tag to an existing batch of the import request.
+     *
+     * @param batchId Production batch ID the tagh belongs to.
+     * @param uid Tag ID
+     * @throws IllegalArgumentException
+     */
     public void addTag(String batchId, byte[] uid)
             throws IllegalArgumentException {
         addTag(batchId, AsciiHexConverter.bytesToHex(uid));
     }
 
+    /**
+     * Add a tag to an existing batch of the import request.
+     *
+     * @param batchId Production batch ID the tagh belongs to
+     * @param tagId Tag ID
+     * @throws IllegalArgumentException
+     */
     public void addTag(String batchId, String tagId)
             throws IllegalArgumentException {
         boolean validBatchId = false;
@@ -95,11 +119,25 @@ public class ProfilesTransactionRequest {
         addRelationships(tagRelationships);
     }
 
+    /**
+     * Add data to an existing tag of the import request.
+     *
+     * @param uid Tag ID
+     * @param keyValueMap Tag data map <key, value>
+     * @throws IllegalArgumentException
+     */
     public void addTagData(byte[] uid, Map<String, String> keyValueMap)
             throws IllegalArgumentException {
         addTagData(AsciiHexConverter.bytesToHex(uid), keyValueMap);
     }
 
+    /**
+     * Add data to an existing tag of the import request.
+     *
+     * @param tagId Tag ID
+     * @param keyValueMap Tag data map <key, value>
+     * @throws IllegalArgumentException
+     */
     public void addTagData(String tagId, Map<String, String> keyValueMap)
             throws IllegalArgumentException {
         boolean validTagId = false;
@@ -126,6 +164,11 @@ public class ProfilesTransactionRequest {
         addMetadata(tagMetadata);
     }
 
+    /**
+     * Add custom objects to import request.
+     *
+     * @param newObjects Objects
+     */
     public void addObjects(ObjectEntity[] newObjects) {
         ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + newObjects.length];
         System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
@@ -133,6 +176,11 @@ public class ProfilesTransactionRequest {
         objects = tmpObjects.clone();
     }
 
+    /**
+     * Add custom object addresses to import request.
+     *
+     * @param newAddresses object addresses
+     */
     public void addObjectAddresses(AddressEntity[] newAddresses) {
         AddressEntity[] tmpAddresses = new AddressEntity[objectAddresses.length + newAddresses.length];
         System.arraycopy(objectAddresses, 0, tmpAddresses, 0, objectAddresses.length);
@@ -140,6 +188,11 @@ public class ProfilesTransactionRequest {
         objectAddresses = tmpAddresses.clone();
     }
 
+    /**
+     * Add relationships between objects to import request.
+     *
+     * @param newRelationships
+     */
     public void addRelationships(RelationshipEntity[] newRelationships) {
         RelationshipEntity[] tmpRelationships = new RelationshipEntity[relationships.length + newRelationships.length];
         System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
@@ -147,6 +200,11 @@ public class ProfilesTransactionRequest {
         relationships = tmpRelationships.clone();
     }
 
+    /**
+     * Add metadata of objects to import request.
+     *
+     * @param newMetadata
+     */
     public void addMetadata(MetadataEntity[] newMetadata) {
         MetadataEntity[] tmpMetadata = new MetadataEntity[metadata.length + newMetadata.length];
         System.arraycopy(metadata, 0, tmpMetadata, 0, metadata.length);
@@ -154,22 +212,47 @@ public class ProfilesTransactionRequest {
         metadata = tmpMetadata.clone();
     }
 
+    /**
+     * Get account which the import data belongs to.
+     *
+     * @return account
+     */
     public AccountEntity getAccount() {
         return account;
     }
 
+    /**
+     * Get all objects contained in the import request.
+     *
+     * @return objects
+     */
     public ObjectEntity[] getObjects() {
         return objects.clone();
     }
 
+    /**
+     * Get all object addresses contained in the import request.
+     *
+     * @return addresses
+     */
     public AddressEntity[] getObjectAddresses() {
         return objectAddresses.clone();
     }
 
+    /**
+     * Get all relationships contained in the import request.
+     *
+     * @return relationships
+     */
     public RelationshipEntity[] getRelationships() {
         return relationships.clone();
     }
 
+    /**
+     * Get all metadata contained in the import request.
+     *
+     * @return metadata
+     */
     public MetadataEntity[] getMetadata() {
         return metadata.clone();
     }
