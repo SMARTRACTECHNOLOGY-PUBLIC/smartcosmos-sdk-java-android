@@ -28,7 +28,7 @@ Importing tags is done in a two-step procedure:
 5. Create a **ProfilesRestClient** instance and call **importProfilesData** with the
    previously created **importProfilesData** object
 
-## Notes on tag metadata:
+**Notes on tag metadata:**
 
 The tag metadata keys have the format **tag:{appId}:{valueType}**
 
