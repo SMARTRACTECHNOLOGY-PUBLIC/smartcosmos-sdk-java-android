@@ -4,6 +4,12 @@
 
  - Profiles account with admin role
 
+**Important notes:**
+
+ - This API is primarily designed to be used on Profiles developer instances.
+ - On productive instances, such as SMART COSMOS Profiles, data import is restricted
+   and not available for normal users.
+
 ## Import procedure
 
 The **ProfilesTransactionRequest** supports easy import of tag data sets, including
@@ -31,7 +37,7 @@ The **appId** can be freely chosen.
 The **valueType** shall have one of the following types:
  - **value** represents normal tag data
  - **locked** defined the access conditions of a value
-   (true = read only, fales = read and write)
+   (**true** = read only, **false** = read and write)
  - **key** represents a tag key to access data
  - **auth** represents a secret to be used for authentication
 
