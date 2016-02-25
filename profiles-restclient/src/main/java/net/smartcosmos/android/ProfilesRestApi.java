@@ -30,6 +30,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 public class ProfilesRestApi {
@@ -42,6 +43,11 @@ public class ProfilesRestApi {
 
         @GET("/rest/tag/tdn/{tagId}")
         GetTagTdnResponse getTagTdn(@Path("tagId") String tagId);
+
+        @GET("/rest/tag/properties/definition/{tagId}")
+        GetTagMetadataDefinitionResponse getTagMetadataDefinition(
+                @Path("tagId") String tagId,
+                @Query("namelike") String nameLike);
 
         @GET("/rest/tag/queryBatches")
         GetQueryBatchesResponse getQueryBatches(@QueryMap Map<ProfilesQueryBatchProperty, Object> queryParams);
@@ -90,6 +96,19 @@ public class ProfilesRestApi {
     public static class GetTagTdnResponse {
         int code;
         String value;
+    }
+
+    public static class GetTagMetadataDefinitionResponse {
+        int code;
+        String tagId;
+        TagMetadataDefinitionProperty[] properties;
+    }
+
+    public static class TagMetadataDefinitionProperty {
+        String propertyId;
+        String propertyName;
+        String dataType;
+        boolean dataAvailable;
     }
 
     public static class GetQueryBatchesResponse {

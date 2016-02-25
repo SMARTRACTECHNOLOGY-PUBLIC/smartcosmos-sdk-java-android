@@ -2,6 +2,10 @@
 
 ## Version History
 
+### 1.5
+
+ - TODO: no relevant changes
+
 ### 1.4
 
  - Added RNG in Secure.getRandomBytes(length)

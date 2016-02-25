@@ -2,6 +2,10 @@
 
 ## Version History
 
+### 1.5
+
+ - Support added to look up property availability for a tag ID
+
 ### 1.4
 
  - Enable import of new tags by using the transaction handler
