@@ -173,6 +173,12 @@ public class ProfilesRestClient {
         return ret;
     }
 
+    /**
+     * Get the account related to the login used by the REST client.
+     *
+     * @return account name
+     * @throws Exception
+     */
     public String getAccount()
             throws Exception {
         try {
