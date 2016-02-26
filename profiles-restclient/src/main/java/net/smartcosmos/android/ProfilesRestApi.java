@@ -41,6 +41,9 @@ public class ProfilesRestApi {
         @GET("/rest/test/ping")
         ProfilesErrorResponse getTestPing();
 
+        @GET("/rest/account")
+        GetAccountResponse getAccount();
+
         @GET("/rest/tag/tdn/{tagId}")
         GetTagTdnResponse getTagTdn(@Path("tagId") String tagId);
 
@@ -92,6 +95,14 @@ public class ProfilesRestApi {
     }		
 
     // Input/output types
+
+    public static class GetAccountResponse {
+        long lastModifiedTimestamp;
+        String name;
+        String description;
+        boolean activeFlag;
+        String urn;
+    }
 
     public static class GetTagTdnResponse {
         int code;

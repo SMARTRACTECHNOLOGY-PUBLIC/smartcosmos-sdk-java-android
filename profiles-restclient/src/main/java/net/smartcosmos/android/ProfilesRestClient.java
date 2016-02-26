@@ -36,6 +36,7 @@ import net.smartcosmos.android.ProfilesRestApi.GetVerificationTagsResponse;
 import net.smartcosmos.android.ProfilesRestApi.IProfilesMethods;
 import net.smartcosmos.android.ProfilesRestApi.PostGetVerificationTags;
 import net.smartcosmos.android.ProfilesRestApi.ProfilesErrorResponse;
+import net.smartcosmos.android.ProfilesRestApi.GetAccountResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetTagKeyResponse;
 import net.smartcosmos.android.ProfilesRestApi.PostGetTagKey;
 import net.smartcosmos.android.ProfilesRestApi.GetTagValueResponse;
@@ -170,6 +171,22 @@ public class ProfilesRestClient {
         Log.d(TAG, "getTestPing: HTTP " + ret.httpStatus +
                    ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
+    }
+
+    public String getAccount()
+            throws Exception {
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            GetAccountResponse accResp = client.getAccount();
+                return accResp.name;
+        }
+        catch (RuntimeException ex) {
+            ProfilesRestResult prr = parseErrorResponse(ex);
+            String sError = "getTagMetadataProperties: HTTP " + prr.httpStatus +
+                    ", code = " + prr.iCode + ", message = " + prr.sMessage;
+            Log.d(TAG, sError);
+            throw new Exception(sError);
+        }
     }
 
     /**

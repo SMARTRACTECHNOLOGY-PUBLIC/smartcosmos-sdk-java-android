@@ -5,6 +5,7 @@
 ### 1.5
 
  - Support added to look up property availability for a tag ID
+ - Added function to get the account realm from the service
 
 ### 1.4
 
