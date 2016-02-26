@@ -188,7 +188,7 @@ public class ProfilesRestClient {
         }
         catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
-            String sError = "getTagMetadataProperties: HTTP " + prr.httpStatus +
+            String sError = "getAccount: HTTP " + prr.httpStatus +
                     ", code = " + prr.iCode + ", message = " + prr.sMessage;
             Log.d(TAG, sError);
             throw new Exception(sError);

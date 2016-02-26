@@ -46,13 +46,9 @@ The **valueType** shall have one of the following types:
 First check if the user has access privileges to import data into Profiles. This can
 be done by submitting an empty import request:
 
-    String[] account = user.split("@");
-    if (account.length != 2)
-    {
-        throw new Exception("Settings: User is no valid e-mail address");
-    }
     ProfilesRestClient client= new ProfilesRestClient(server, user, password);
-    ProfilesTransactionRequest req = new ProfilesTransactionRequest(account[1]);
+    String account = client.getAccount();
+    ProfilesTransactionRequest req = new ProfilesTransactionRequest(account);
     ProfilesRestResult result = client.importProfilesData(req);
     switch (result.httpStatus) {
         case 200:
@@ -80,7 +76,7 @@ Now when import access is possible, it is time to import some data:
     String tagIds[] = {"04555555555555", "04AAAAAAAAAAAA"};
     String tagDataKey = "tag:ndef:value";
     String tagDataValue = "D101135502736D6172747261632D67726F75702E636F6D";
-    ProfilesTransactionRequest transaction = new ProfilesTransactionRequest(account[1]);
+    ProfilesTransactionRequest transaction = new ProfilesTransactionRequest(account);
     transaction.addBatch(batchId);
     transaction.addTag(batchId, tagIds[0]);
     transaction.addTag(batchId, tagIds[1]);
