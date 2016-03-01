@@ -9,7 +9,7 @@ SMART COSMOS Profiles REST API optimized for Android Java
 ### Dependencies
 
  - RetroFit REST API 1.9.0
- - Google GSON 2.4
+ - Google GSON 2.6.2
  - SMART COSMOS Utility for Android
 
 ### Documentation
@@ -29,6 +29,7 @@ Support library for SMART COSMOS SDKs
  - OTP Calculation (RFC 6238)
  - AsciiHex Conversion
  - Intent launcher (allows to open URLs, new emails, etc.)
+ - Secure RNG
 
 ## Join SMART COSMOS
 Are you ready to become part of creating something really big? With SMART COSMOS

@@ -36,6 +36,7 @@ import net.smartcosmos.android.ProfilesRestApi.GetVerificationTagsResponse;
 import net.smartcosmos.android.ProfilesRestApi.IProfilesMethods;
 import net.smartcosmos.android.ProfilesRestApi.PostGetVerificationTags;
 import net.smartcosmos.android.ProfilesRestApi.ProfilesErrorResponse;
+import net.smartcosmos.android.ProfilesRestApi.GetAccountResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetTagKeyResponse;
 import net.smartcosmos.android.ProfilesRestApi.PostGetTagKey;
 import net.smartcosmos.android.ProfilesRestApi.GetTagValueResponse;
@@ -55,6 +56,8 @@ import net.smartcosmos.android.ProfilesRestApi.PostGetVerificationMessage;
 import net.smartcosmos.android.ProfilesRestApi.GetTagTdnResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetQueryBatchesResponse;
 import net.smartcosmos.android.ProfilesRestApi.GetQueryTagsResponse;
+import net.smartcosmos.android.ProfilesRestApi.GetTagMetadataDefinitionResponse;
+import net.smartcosmos.android.ProfilesRestApi.TagMetadataDefinitionProperty;
 
 import net.smartcosmos.android.utility.AsciiHexConverter;
 import net.smartcosmos.android.utility.Rfc6238;
@@ -171,6 +174,28 @@ public class ProfilesRestClient {
     }
 
     /**
+     * Get the account related to the login used by the REST client.
+     *
+     * @return account name
+     * @throws Exception
+     */
+    public String getAccount()
+            throws Exception {
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            GetAccountResponse accResp = client.getAccount();
+                return accResp.name;
+        }
+        catch (RuntimeException ex) {
+            ProfilesRestResult prr = parseErrorResponse(ex);
+            String sError = "getAccount: HTTP " + prr.httpStatus +
+                    ", code = " + prr.iCode + ", message = " + prr.sMessage;
+            Log.d(TAG, sError);
+            throw new Exception(sError);
+        }
+    }
+
+    /**
      * Function get TDN data from a tag.
      *
      * @param uid
@@ -195,6 +220,40 @@ public class ProfilesRestClient {
         Log.d(TAG, "getTagTdn: HTTP " + ret.httpStatus +
                    ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
+    }
+
+    /**
+     * Function to get the Metadata Definition for a given tag.
+     *
+     * @param tagId tag ID
+     * @param nameLike Property search name pattern
+     * @return TagMetadataDefinitionProperty
+     *          .propertyId
+     *          .propertyName
+     *          .dataType
+     *          .dataAvailable
+     * @throws Exception
+     */
+    public TagMetadataDefinitionProperty[] getTagMetadataProperties(byte[] tagId, String nameLike)
+        throws Exception
+    {
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            GetTagMetadataDefinitionResponse resp = client.getTagMetadataDefinition(
+                    AsciiHexConverter.bytesToHex(tagId),
+                    nameLike);
+            if (resp.code == 0) {
+                return resp.properties;
+            }
+        }
+        catch (RuntimeException ex) {
+            ProfilesRestResult prr = parseErrorResponse(ex);
+            String sError = "getTagMetadataProperties: HTTP " + prr.httpStatus +
+                    ", code = " + prr.iCode + ", message = " + prr.sMessage;
+            Log.d(TAG, sError);
+            throw new Exception(sError);
+        }
+        return null;
     }
 
     /**
