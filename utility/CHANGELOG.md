@@ -4,7 +4,7 @@
 
 ### 1.5
 
- - TODO: no relevant changes
+ - Documentation updated
 
 ### 1.4
 
