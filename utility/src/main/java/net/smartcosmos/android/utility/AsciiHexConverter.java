@@ -23,10 +23,7 @@ package net.smartcosmos.android.utility;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
-
 public class AsciiHexConverter {
-
-	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
 
@@ -35,9 +32,10 @@ public class AsciiHexConverter {
             if ((bytes[i] & 0xF0) == 0) {
                 sb.append("0");
             }
-            sb.append(Integer.toHexString(bytes [i] & 0xFF));
+            sb.append(Integer.toHexString(bytes[i] & 0xFF));
         }
-        return sb.toString().toUpperCase();
+        return sb.toString()
+            .toUpperCase();
     }
 
     public static String bytesToHexReverse(byte[] bytes) {
@@ -47,16 +45,17 @@ public class AsciiHexConverter {
             if ((bytes[i] & 0xF0) == 0) {
                 sb.append("0");
             }
-            sb.append(Integer.toHexString(bytes [i] & 0xFF));
+            sb.append(Integer.toHexString(bytes[i] & 0xFF));
         }
-        return sb.toString().toUpperCase();
+        return sb.toString()
+            .toUpperCase();
     }
 
     public static byte[] hexToBytes(String s) {
 
         byte[] data = new byte[s.length() / 2];
         for (int i = 0; i < data.length; i++) {
-            data[i] = (byte)(0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
+            data[i] = (byte) (0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
         }
         return data;
     }
@@ -65,7 +64,7 @@ public class AsciiHexConverter {
 
         byte[] data = new byte[s.length() / 2];
         for (int i = 0; i < data.length; i++) {
-            data[data.length - i - 1] = (byte)(0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
+            data[data.length - i - 1] = (byte) (0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
         }
         return data;
     }

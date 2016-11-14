@@ -8,7 +8,7 @@ public class AsciiHexConverterTest {
     public void bytesToHexTest() {
 
         final String expected = "0123456789ABCDEF";
-        final byte[] input = {0x01, 0x23, 0x45, 0x67, (byte)0x89, (byte)0xAB, (byte)0xCD, (byte) 0xEF};
+        final byte[] input = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
 
         final String output = AsciiHexConverter.bytesToHex(input);
 
@@ -19,7 +19,7 @@ public class AsciiHexConverterTest {
     public void bytesToHexReverseTest() {
 
         final String expected = "EFCDAB8967452301";
-        final byte[] input = {0x01, 0x23, 0x45, 0x67, (byte)0x89, (byte)0xAB, (byte)0xCD, (byte) 0xEF};
+        final byte[] input = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
 
         final String output = AsciiHexConverter.bytesToHexReverse(input);
 
@@ -30,7 +30,7 @@ public class AsciiHexConverterTest {
     public void hexToBytesTest() {
 
         final String input = "0123456789ABCDEF";
-        final byte[] expected = {0x01, 0x23, 0x45, 0x67, (byte)0x89, (byte)0xAB, (byte)0xCD, (byte) 0xEF};
+        final byte[] expected = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
 
         final byte[] output = AsciiHexConverter.hexToBytes(input);
 
@@ -41,7 +41,7 @@ public class AsciiHexConverterTest {
     public void hexToBytesReverseTest() {
 
         final String input = "0123456789ABCDEF";
-        final byte[] expected = {(byte)0xEF, (byte)0xCD, (byte)0xAB, (byte)0x89, 0x67, 0x45, 0x23, 0x01};
+        final byte[] expected = { (byte) 0xEF, (byte) 0xCD, (byte) 0xAB, (byte) 0x89, 0x67, 0x45, 0x23, 0x01 };
 
         final byte[] output = AsciiHexConverter.hexToBytesReverse(input);
 
