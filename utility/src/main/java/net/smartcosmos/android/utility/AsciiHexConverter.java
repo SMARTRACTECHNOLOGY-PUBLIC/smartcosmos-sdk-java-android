@@ -27,17 +27,32 @@ package net.smartcosmos.android.utility;
 public class AsciiHexConverter {
 
 	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-	
-	public static String bytesToHex(byte[] bytes) {
-	    char[] hexChars = new char[bytes.length * 2];
-	    for ( int j = 0; j < bytes.length; j++ ) {
-	        int v = bytes[j] & 0xFF;
-	        hexChars[j * 2] = hexArray[v >>> 4];
-	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-	    }
-	    return new String(hexChars);
-	}	
-	
+
+    public static String bytesToHex(byte[] bytes) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            if ((bytes[i] & 0xF0) == 0) {
+                sb.append("0");
+            }
+            sb.append(Integer.toHexString(bytes [i] & 0xFF));
+        }
+        return sb.toString().toUpperCase();
+    }
+
+    public static String bytesToHexReverse(byte[] bytes) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = bytes.length - 1; i >= 0; i--) {
+            if ((bytes[i] & 0xF0) == 0) {
+                sb.append("0");
+            }
+            sb.append(Integer.toHexString(bytes [i] & 0xFF));
+        }
+        return sb.toString().toUpperCase();
+    }
+
+    /*
 	public static String bytesToHexReverse(byte[] bytes) {
 	    char[] hexChars = new char[bytes.length * 2];
 	    for ( int j = 0; j < bytes.length; j++ ) {
@@ -46,8 +61,9 @@ public class AsciiHexConverter {
 	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
 	    }
 	    return new String(hexChars);
-	}	
-	
+	}
+	*/
+
 	public static byte[] hexToBytes(String s) {
 		int len = s.length();
 		byte[] data = new byte[len / 2];
