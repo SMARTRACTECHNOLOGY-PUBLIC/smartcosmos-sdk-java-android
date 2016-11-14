@@ -20,4 +20,7 @@
     <Class name="net.smartcosmos.android.utility.Secure"/>
     <Bug pattern="NP_NULL_ON_SOME_PATH"/>
 
+    <Class name="net.smartcosmos.android.utility.AsciiHexConverter"/>
+    <Bug pattern="DM_CONVERT_CASE"/>
+
 </FindBugsFilter>

@@ -27,44 +27,45 @@ package net.smartcosmos.android.utility;
 public class AsciiHexConverter {
 
 	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-	
-	public static String bytesToHex(byte[] bytes) {
-	    char[] hexChars = new char[bytes.length * 2];
-	    for ( int j = 0; j < bytes.length; j++ ) {
-	        int v = bytes[j] & 0xFF;
-	        hexChars[j * 2] = hexArray[v >>> 4];
-	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-	    }
-	    return new String(hexChars);
-	}	
-	
-	public static String bytesToHexReverse(byte[] bytes) {
-	    char[] hexChars = new char[bytes.length * 2];
-	    for ( int j = 0; j < bytes.length; j++ ) {
-	        int v = bytes[bytes.length - j - 1] & 0xFF;
-	        hexChars[j * 2] = hexArray[v >>> 4];
-	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-	    }
-	    return new String(hexChars);
-	}	
-	
-	public static byte[] hexToBytes(String s) {
-		int len = s.length();
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2)
-		{
-			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-					+ Character.digit(s.charAt(i + 1), 16));
-		}
-		return data;
-	}
+
+    public static String bytesToHex(byte[] bytes) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            if ((bytes[i] & 0xF0) == 0) {
+                sb.append("0");
+            }
+            sb.append(Integer.toHexString(bytes [i] & 0xFF));
+        }
+        return sb.toString().toUpperCase();
+    }
+
+    public static String bytesToHexReverse(byte[] bytes) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = bytes.length - 1; i >= 0; i--) {
+            if ((bytes[i] & 0xF0) == 0) {
+                sb.append("0");
+            }
+            sb.append(Integer.toHexString(bytes [i] & 0xFF));
+        }
+        return sb.toString().toUpperCase();
+    }
+
+    public static byte[] hexToBytes(String s) {
+
+        byte[] data = new byte[s.length() / 2];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (byte)(0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
+        }
+        return data;
+    }
 
     public static byte[] hexToBytesReverse(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[(len - i - 1) / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+
+        byte[] data = new byte[s.length() / 2];
+        for (int i = 0; i < data.length; i++) {
+            data[data.length - i - 1] = (byte)(0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
         }
         return data;
     }
