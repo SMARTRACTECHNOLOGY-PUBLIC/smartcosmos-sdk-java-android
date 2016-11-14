@@ -38,7 +38,7 @@ public class AsciiHexConverterTest {
     }
 
     @Test
-    public void hexToBytesTestReverse() {
+    public void hexToBytesReverseTest() {
 
         final String input = "0123456789ABCDEF";
         final byte[] expected = {(byte)0xEF, (byte)0xCD, (byte)0xAB, (byte)0x89, 0x67, 0x45, 0x23, 0x01};

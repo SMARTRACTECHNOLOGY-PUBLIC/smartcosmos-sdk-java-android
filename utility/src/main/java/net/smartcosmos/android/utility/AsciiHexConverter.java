@@ -52,35 +52,20 @@ public class AsciiHexConverter {
         return sb.toString().toUpperCase();
     }
 
-    /*
-	public static String bytesToHexReverse(byte[] bytes) {
-	    char[] hexChars = new char[bytes.length * 2];
-	    for ( int j = 0; j < bytes.length; j++ ) {
-	        int v = bytes[bytes.length - j - 1] & 0xFF;
-	        hexChars[j * 2] = hexArray[v >>> 4];
-	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-	    }
-	    return new String(hexChars);
-	}
-	*/
+    public static byte[] hexToBytes(String s) {
 
-	public static byte[] hexToBytes(String s) {
-		int len = s.length();
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2)
-		{
-			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-					+ Character.digit(s.charAt(i + 1), 16));
-		}
-		return data;
-	}
+        byte[] data = new byte[s.length() / 2];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (byte)(0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
+        }
+        return data;
+    }
 
     public static byte[] hexToBytesReverse(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[(len - i - 1) / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+
+        byte[] data = new byte[s.length() / 2];
+        for (int i = 0; i < data.length; i++) {
+            data[data.length - i - 1] = (byte)(0xFF & Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16));
         }
         return data;
     }

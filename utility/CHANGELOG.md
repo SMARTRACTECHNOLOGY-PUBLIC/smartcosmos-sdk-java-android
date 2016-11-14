@@ -2,6 +2,10 @@
 
 ## Version History
 
+### 1.6
+
+ - Refactor AsciiHexConverter
+
 ### 1.5
 
  - Documentation updated
