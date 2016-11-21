@@ -2,6 +2,9 @@
 
 ## Version History
 
+### 1.6
+ - Dependencies updated (gson, utility)
+
 ### 1.5
 
  - Support added to look up property availability for a tag ID
