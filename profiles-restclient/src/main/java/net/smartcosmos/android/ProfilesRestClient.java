@@ -568,6 +568,7 @@ public class ProfilesRestClient {
      *			.iCode = 0 if successful
      *			.sMessage = status message
      */
+    @Deprecated
     public ProfilesRestResult getVerificationMessage(String verificationType,
                                                      int verificationState)
     {

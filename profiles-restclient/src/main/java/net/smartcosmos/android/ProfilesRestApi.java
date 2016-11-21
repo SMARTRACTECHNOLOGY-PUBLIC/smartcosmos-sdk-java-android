@@ -41,6 +41,7 @@ public class ProfilesRestApi {
         @GET("/rest/test/ping")
         ProfilesErrorResponse getTestPing();
 
+        @Deprecated
         @GET("/rest/account")
         GetAccountResponse getAccount();
 
@@ -76,12 +77,14 @@ public class ProfilesRestApi {
         @POST("/rest/tag/auth/otp/validate")
         ValidateAuthOtpResponse postValidateAuthOtp(@Body PostValidateAuthOtpRequest pOtpValidate);
 
+        @Deprecated
         @POST("/rest/verification/message")
         GetVerificationMessageResponse postGetVerificationMessage (@Body PostGetVerificationMessage pGvm);
 
         @POST("/rest/verification/tags")
         GetVerificationTagsResponse postGetVerificationTags (@Body PostGetVerificationTags pGvt);
 
+        @Deprecated
         @POST("/rest/transaction/{handler}")
         ProfilesErrorResponse postTransaction (
                 @Path("handler") String handler,
