@@ -9,7 +9,7 @@ SMART COSMOS Profiles REST API optimized for Android Java
 ### Dependencies
 
  - RetroFit REST API 1.9.0
- - Google GSON 2.6.2
+ - Google GSON 2.8.0
  - SMART COSMOS Utility for Android
 
 ### Documentation
