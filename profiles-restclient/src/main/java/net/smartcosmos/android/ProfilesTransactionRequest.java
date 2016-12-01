@@ -27,6 +27,7 @@ import net.smartcosmos.android.utility.AsciiHexConverter;
 
 import java.util.Map;
 
+@Deprecated
 public class ProfilesTransactionRequest {
 
     static final String DATATYPE_STRING = "StringType";
