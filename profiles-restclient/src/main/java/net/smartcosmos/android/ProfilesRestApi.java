@@ -89,6 +89,10 @@ public class ProfilesRestApi {
         ProfilesErrorResponse postTransaction (
                 @Path("handler") String handler,
                 @Body ProfilesTransactionRequest[] profilesTransactionRequest);
+
+        @POST("/rest/transaction")
+        ProfilesBulkImportResponse postBulkImport (
+            @Body ProfilesBulkImportRequest profilesBulkImportRequest);
     }
 
     // Standard response object for all HTTP 4xx responses  
