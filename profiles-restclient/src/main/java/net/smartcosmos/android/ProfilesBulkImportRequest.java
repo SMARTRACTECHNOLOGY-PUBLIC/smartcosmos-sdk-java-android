@@ -30,10 +30,11 @@ import net.smartcosmos.android.utility.AsciiHexConverter;
 
 public class ProfilesBulkImportRequest {
 
-    static final String PREFIX_BATCH = "urn:uuid:smartrac-group:batch:";
-    static final String TYPE_BATCH = "Batch";
-    static final String PREFIX_TAG = "urn:uuid:smartrac-group:tag:";
-    static final String TYPE_TAG = "Tag";
+    private static final String PREFIX_BATCH = "urn:uuid:smartrac-group:batch:";
+    private static final String TYPE_BATCH = "Batch";
+    private static final String PREFIX_TAG = "urn:uuid:smartrac-group:tag:";
+    private static final String TYPE_TAG = "Tag";
+    private static final String REL_CONTAINS = "contains";
 
     private Relationship[] relationships;
 
@@ -45,6 +46,7 @@ public class ProfilesBulkImportRequest {
     }
 
     public void addBatch(String batchId) {
+
         Map<String, Object>[] batchThing = new HashMap[1];
         batchThing[0].put("active", true);
         batchThing[0].put("name", batchId);
@@ -59,19 +61,62 @@ public class ProfilesBulkImportRequest {
     }
 
     public void addTag(String batchId, String tagId) {
+        boolean validBatchId = false;
+
+        RelationshipReference source = new RelationshipReference();
+        source.type = TYPE_BATCH;
+        source.urn = PREFIX_BATCH + batchId;
+        RelationshipReference target = new RelationshipReference();
+        target.type = TYPE_TAG;
+        target.urn = PREFIX_TAG + tagId;
+
+        for (int i = 0; i < things.length; i++) {
+            String thingType = things[i].get("type").toString();
+            String thingUrn = things[i].get("urn").toString();
+
+            if (source.type.equalsIgnoreCase(thingType) && source.urn.equalsIgnoreCase(thingUrn)) {
+                validBatchId = true;
+                break;
+            }
+        }
+        if (!validBatchId) {
+            throw new IllegalArgumentException("Cannot add tag to absent batch " + batchId + ".");
+        }
+
         Map<String, Object>[] tagThing = new HashMap[1];
         tagThing[0].put("active", true);
         tagThing[0].put("name", tagId);
-        tagThing[0].put("type", TYPE_TAG);
-        tagThing[0].put("urn", PREFIX_TAG + tagId);
+        tagThing[0].put("type", target.type);
+        tagThing[0].put("urn", target.urn);
         addThings(tagThing);
+
+        Relationship[] tagRelationship = new Relationship[1];
+        tagRelationship[0].source = source;
+        tagRelationship[0].target = target;
+        tagRelationship[0].relationshipType = REL_CONTAINS;
+        addRelationships(tagRelationship);
     }
 
+    /**
+     * Add data to an existing tag of the import request.
+     *
+     * @param uid Tag ID
+     * @param keyValueMap Tag data map <key, value>
+     * @throws IllegalArgumentException
+     */
     public void addTagData(byte[] uid, Map<String, Object> keyValueMap)
         throws IllegalArgumentException {
+
         addTagData(AsciiHexConverter.bytesToHex(uid), keyValueMap);
     }
 
+    /**
+     * Add data to an existing tag of the import request.
+     *
+     * @param tagId Tag ID
+     * @param keyValueMap Tag data map <key, value>
+     * @throws IllegalArgumentException
+     */
     public void addTagData(String tagId, Map<String, Object> keyValueMap)
         throws IllegalArgumentException {
 
@@ -87,6 +132,18 @@ public class ProfilesBulkImportRequest {
             }
         }
         throw new IllegalArgumentException("No such tagId");
+    }
+
+    /**
+     * Add custom relationships to import request.
+     *
+     * @param newRelationships Relationships
+     */
+    public void addRelationships(Relationship[] newRelationships) {
+        Relationship[] tmpRelationships = new Relationship[relationships.length + newRelationships.length];
+        System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
+        System.arraycopy(newRelationships, 0, tmpRelationships, relationships.length, newRelationships.length);
+        relationships = tmpRelationships.clone();
     }
 
     /**
