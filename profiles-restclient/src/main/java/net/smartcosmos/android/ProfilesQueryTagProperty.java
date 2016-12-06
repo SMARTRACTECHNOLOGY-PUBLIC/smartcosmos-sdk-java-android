@@ -26,8 +26,10 @@ package net.smartcosmos.android;
 
 public enum ProfilesQueryTagProperty
 {
+    batchUrn,
     count,
-    batchUrn;
+    page,
+    size;
 
     public static ProfilesQueryTagProperty parseProfilesQueryTagProperty(String value)
         throws IllegalArgumentException, NullPointerException {

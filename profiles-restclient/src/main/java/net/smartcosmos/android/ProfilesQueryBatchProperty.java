@@ -29,7 +29,9 @@ public enum ProfilesQueryBatchProperty
     count,
     customerPO,
     delivId,
-    orderId;
+    orderId,
+    page,
+    size;
 
     public static ProfilesQueryBatchProperty parseProfilesQueryBatchProperty(String value)
         throws IllegalArgumentException, NullPointerException {
