@@ -132,11 +132,13 @@ public class ProfilesRestApi {
     public static class GetQueryBatchesResponse {
         int code;
         String[] batchUrns;
+        PageInformation page;
     }
 
     public static class GetQueryTagsResponse {
         int code;
         String[] tagIds;
+        PageInformation page;
     }
 
     public static class PostGetTagKey {
@@ -254,5 +256,12 @@ public class ProfilesRestApi {
         public String tagId;
         public int tagCode;
         public int state;
+    }
+
+    public static class PageInformation {
+        public int size;
+        public long totalElements;
+        public int totalPages;
+        public int number;
     }
 }

@@ -23,6 +23,7 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
+@Deprecated
 public enum ProfilesEntityReferenceType {
     Object,
     ObjectAddress;

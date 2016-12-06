@@ -28,6 +28,7 @@ import java.util.Map;
 
 import net.smartcosmos.android.utility.AsciiHexConverter;
 
+@SuppressWarnings("unchecked")
 public class ProfilesBulkImportRequest {
 
     private static final String PREFIX_BATCH = "urn:uuid:smartrac-group:batch:";
@@ -152,7 +153,7 @@ public class ProfilesBulkImportRequest {
      * @param newThings Things
      */
     public void addThings(Map<String, Object>[] newThings) {
-        Map[] tmpThings = new HashMap[things.length + newThings.length];
+        Map<String, Object>[] tmpThings = new HashMap[things.length + newThings.length];
         System.arraycopy(things, 0, tmpThings, 0, things.length);
         System.arraycopy(newThings, 0, tmpThings, things.length, newThings.length);
         things = tmpThings.clone();
@@ -186,6 +187,4 @@ public class ProfilesBulkImportRequest {
         String type;
         String urn;
     }
-
-
 }

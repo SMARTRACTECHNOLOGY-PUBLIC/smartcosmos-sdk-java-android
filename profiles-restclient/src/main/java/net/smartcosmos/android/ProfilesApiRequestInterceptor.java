@@ -36,7 +36,6 @@ public class ProfilesApiRequestInterceptor implements RequestInterceptor {
     private String _sUser;
     private String _sPassword;
 
-    //@Override
     public void intercept(RequestFacade requestFacade) {
 
         if (_sUser != null) {
