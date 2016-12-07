@@ -633,7 +633,7 @@ public class ProfilesRestClient {
     }
 
     /**
-     * Import large data sets into Profiles
+     * Import large data sets into Profiles (API: Profiles v2)
      *
      * @param profilesTransactionRequest
      * @return ProfilesRestResult
@@ -658,6 +658,22 @@ public class ProfilesRestClient {
         }
         Log.d(TAG, "importProfilesData: HTTP " + ret.httpStatus +
                 ", code = " + ret.iCode + ", message = " + ret.sMessage);
+        return ret;
+    }
+
+    /**
+     * Import large data sets into Profiles (API: Profiles v3)
+     *
+     * @param profilesBulkImportRequest
+     * @return ProfilesBulkImportResponse
+     */
+    public ProfilesBulkImportResponse importProfilesData(ProfilesBulkImportRequest profilesBulkImportRequest)
+        throws Exception
+    {
+        ProfilesBulkImportResponse ret = null;
+
+        IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+        ret = client.postBulkImport(profilesBulkImportRequest);
         return ret;
     }
 }
