@@ -651,6 +651,9 @@ public class ProfilesRestClient {
      *
      * @param profilesBulkImportRequest
      * @return ProfilesRestResult
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 1 if successful
+     * .sMessage = status message
      */
     public ProfilesRestResult importProfilesData(ProfilesBulkImportRequest profilesBulkImportRequest) {
 
@@ -660,7 +663,7 @@ public class ProfilesRestClient {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             client.postBulkImport(profilesBulkImportRequest);
             ret.httpStatus = 200;
-            ret.iCode = 0;
+            ret.iCode = 1;
             ret.sMessage = "";
         } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
