@@ -627,7 +627,6 @@ public class ProfilesRestClient {
      * .iCode = 1 if successful
      * .sMessage = status message
      */
-    @Deprecated
     public ProfilesRestResult importProfilesData(ProfilesTransactionRequest profilesTransactionRequest) {
 
         ProfilesRestResult ret = new ProfilesRestResult();
@@ -659,7 +658,7 @@ public class ProfilesRestClient {
 
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
-            ProfilesBulkImportResponse resp = client.postBulkImport(profilesBulkImportRequest);
+            client.postBulkImport(profilesBulkImportRequest);
             ret.httpStatus = 200;
             ret.iCode = 0;
             ret.sMessage = "";
