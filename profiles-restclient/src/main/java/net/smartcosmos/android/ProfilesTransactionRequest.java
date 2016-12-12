@@ -48,6 +48,7 @@ public class ProfilesTransactionRequest {
      * @param accountDomain account which the import data belongs to
      */
     public ProfilesTransactionRequest(String accountDomain) {
+
         account = new AccountEntity();
         account.name = accountDomain;
         account.moniker = "*";
@@ -63,6 +64,7 @@ public class ProfilesTransactionRequest {
      * @param batchId Production batch ID
      */
     public void addBatch(String batchId) {
+
         ObjectEntity[] batchObjects = new ObjectEntity[1];
         batchObjects[0] = new ObjectEntity();
         batchObjects[0].objectUrn = PREFIX_BATCH + batchId;
@@ -79,7 +81,8 @@ public class ProfilesTransactionRequest {
      * @throws IllegalArgumentException
      */
     public void addTag(String batchId, byte[] uid)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
+
         addTag(batchId, AsciiHexConverter.bytesToHex(uid));
     }
 
@@ -91,7 +94,8 @@ public class ProfilesTransactionRequest {
      * @throws IllegalArgumentException
      */
     public void addTag(String batchId, String tagId)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
+
         boolean validBatchId = false;
         for (ObjectEntity o : objects) {
             if (o.objectUrn.equalsIgnoreCase(PREFIX_BATCH + batchId)) {
@@ -128,7 +132,8 @@ public class ProfilesTransactionRequest {
      * @throws IllegalArgumentException
      */
     public void addTagData(byte[] uid, Map<String, String> keyValueMap)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
+
         addTagData(AsciiHexConverter.bytesToHex(uid), keyValueMap);
     }
 
@@ -140,7 +145,8 @@ public class ProfilesTransactionRequest {
      * @throws IllegalArgumentException
      */
     public void addTagData(String tagId, Map<String, String> keyValueMap)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
+
         boolean validTagId = false;
         for (ObjectEntity o : objects) {
             if (o.objectUrn.equalsIgnoreCase(PREFIX_TAG + tagId)) {
@@ -153,7 +159,7 @@ public class ProfilesTransactionRequest {
         }
         MetadataEntity[] tagMetadata = new MetadataEntity[metadata.length + keyValueMap.size()];
         int i = 0;
-        for (Map.Entry<String, String > entry : keyValueMap.entrySet()) {
+        for (Map.Entry<String, String> entry : keyValueMap.entrySet()) {
             tagMetadata[i] = new MetadataEntity();
             tagMetadata[i].entityReferenceType = ProfilesEntityReferenceType.Object;
             tagMetadata[i].referenceUrn = PREFIX_TAG + tagId;
@@ -171,6 +177,7 @@ public class ProfilesTransactionRequest {
      * @param newObjects Objects
      */
     public void addObjects(ObjectEntity[] newObjects) {
+
         ObjectEntity[] tmpObjects = new ObjectEntity[objects.length + newObjects.length];
         System.arraycopy(objects, 0, tmpObjects, 0, objects.length);
         System.arraycopy(newObjects, 0, tmpObjects, objects.length, newObjects.length);
@@ -183,6 +190,7 @@ public class ProfilesTransactionRequest {
      * @param newAddresses object addresses
      */
     public void addObjectAddresses(AddressEntity[] newAddresses) {
+
         AddressEntity[] tmpAddresses = new AddressEntity[objectAddresses.length + newAddresses.length];
         System.arraycopy(objectAddresses, 0, tmpAddresses, 0, objectAddresses.length);
         System.arraycopy(newAddresses, 0, tmpAddresses, objectAddresses.length, newAddresses.length);
@@ -195,6 +203,7 @@ public class ProfilesTransactionRequest {
      * @param newRelationships
      */
     public void addRelationships(RelationshipEntity[] newRelationships) {
+
         RelationshipEntity[] tmpRelationships = new RelationshipEntity[relationships.length + newRelationships.length];
         System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
         System.arraycopy(newRelationships, 0, tmpRelationships, relationships.length, newRelationships.length);
@@ -207,6 +216,7 @@ public class ProfilesTransactionRequest {
      * @param newMetadata
      */
     public void addMetadata(MetadataEntity[] newMetadata) {
+
         MetadataEntity[] tmpMetadata = new MetadataEntity[metadata.length + newMetadata.length];
         System.arraycopy(metadata, 0, tmpMetadata, 0, metadata.length);
         System.arraycopy(newMetadata, 0, tmpMetadata, metadata.length, newMetadata.length);
@@ -219,6 +229,7 @@ public class ProfilesTransactionRequest {
      * @return account
      */
     public AccountEntity getAccount() {
+
         return account;
     }
 
@@ -228,6 +239,7 @@ public class ProfilesTransactionRequest {
      * @return objects
      */
     public ObjectEntity[] getObjects() {
+
         return objects.clone();
     }
 
@@ -237,6 +249,7 @@ public class ProfilesTransactionRequest {
      * @return addresses
      */
     public AddressEntity[] getObjectAddresses() {
+
         return objectAddresses.clone();
     }
 
@@ -246,6 +259,7 @@ public class ProfilesTransactionRequest {
      * @return relationships
      */
     public RelationshipEntity[] getRelationships() {
+
         return relationships.clone();
     }
 
@@ -255,21 +269,25 @@ public class ProfilesTransactionRequest {
      * @return metadata
      */
     public MetadataEntity[] getMetadata() {
+
         return metadata.clone();
     }
 
     public static class AccountEntity {
+
         String name;
         String moniker;
     }
 
     public static class ObjectEntity {
+
         String objectUrn;
         String type;
         String name;
     }
 
     public static class AddressEntity {
+
         String objectUrn;
         String type;
         String line1;
@@ -281,6 +299,7 @@ public class ProfilesTransactionRequest {
     }
 
     public static class RelationshipEntity {
+
         ProfilesEntityReferenceType entityReferenceType;
         String referenceUrn;
         String type;
@@ -289,6 +308,7 @@ public class ProfilesTransactionRequest {
     }
 
     public static class MetadataEntity {
+
         String value;
         ProfilesEntityReferenceType entityReferenceType;
         String referenceUrn;

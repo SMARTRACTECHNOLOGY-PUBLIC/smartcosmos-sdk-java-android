@@ -23,8 +23,8 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
-
 import java.util.Map;
+
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -38,6 +38,7 @@ public class ProfilesRestApi {
     // Methods
 
     public interface IProfilesMethods {
+
         @GET("/rest/test/ping")
         ProfilesErrorResponse getTestPing();
 
@@ -50,8 +51,8 @@ public class ProfilesRestApi {
 
         @GET("/rest/tag/properties/definition/{tagId}")
         GetTagMetadataDefinitionResponse getTagMetadataDefinition(
-                @Path("tagId") String tagId,
-                @Query("namelike") String nameLike);
+            @Path("tagId") String tagId,
+            @Query("namelike") String nameLike);
 
         @GET("/rest/tag/queryBatches")
         GetQueryBatchesResponse getQueryBatches(@QueryMap Map<ProfilesQueryBatchProperty, Object> queryParams);
@@ -79,31 +80,33 @@ public class ProfilesRestApi {
 
         @Deprecated
         @POST("/rest/verification/message")
-        GetVerificationMessageResponse postGetVerificationMessage (@Body PostGetVerificationMessage pGvm);
+        GetVerificationMessageResponse postGetVerificationMessage(@Body PostGetVerificationMessage pGvm);
 
         @POST("/rest/verification/tags")
-        GetVerificationTagsResponse postGetVerificationTags (@Body PostGetVerificationTags pGvt);
+        GetVerificationTagsResponse postGetVerificationTags(@Body PostGetVerificationTags pGvt);
 
         @Deprecated
         @POST("/rest/transaction/{handler}")
-        ProfilesErrorResponse postTransaction (
-                @Path("handler") String handler,
-                @Body ProfilesTransactionRequest[] profilesTransactionRequest);
+        ProfilesErrorResponse postTransaction(
+            @Path("handler") String handler,
+            @Body ProfilesTransactionRequest[] profilesTransactionRequest);
 
         @POST("/rest/transaction")
-        ProfilesBulkImportResponse postBulkImport (
+        ProfilesBulkImportResponse postBulkImport(
             @Body ProfilesBulkImportRequest profilesBulkImportRequest);
     }
 
     // Standard response object for all HTTP 4xx responses  
     public static class ProfilesErrorResponse {
+
         int code;
         String message;
-    }		
+    }
 
     // Input/output types
 
     public static class GetAccountResponse {
+
         long lastModifiedTimestamp;
         String name;
         String description;
@@ -112,17 +115,20 @@ public class ProfilesRestApi {
     }
 
     public static class GetTagTdnResponse {
+
         int code;
         String value;
     }
 
     public static class GetTagMetadataDefinitionResponse {
+
         int code;
         String tagId;
         TagMetadataDefinitionProperty[] properties;
     }
 
     public static class TagMetadataDefinitionProperty {
+
         String propertyId;
         String propertyName;
         String dataType;
@@ -130,89 +136,105 @@ public class ProfilesRestApi {
     }
 
     public static class GetQueryBatchesResponse {
+
         int code;
         String[] batchUrns;
         PageInformation page;
     }
 
     public static class GetQueryTagsResponse {
+
         int code;
         String[] tagIds;
         PageInformation page;
     }
 
     public static class PostGetTagKey {
+
         String[] tagIds;
         String appId;
     }
-    
+
     public static class GetTagKeyResponse {
+
         int code;
         TagKeyItem[] result;
     }
-    
+
     public static class TagKeyItem {
+
         String tagId;
         int tagCode;
         String key;
     }
 
     public static class PostGetTagValue {
+
         String[] tagIds;
         String appId;
     }
 
     public static class GetTagValueResponse {
+
         int code;
         TagValueItem[] result;
     }
 
     public static class PutUpdateTagValue {
+
         String appId;
         TagValuesToWrite[] tags;
     }
 
     public static class TagValuesToWrite {
+
         String tagId;
         String value;
         boolean locked;
     }
 
     public static class UpdateTagValueResponse {
+
         int code;
         TagValueWrite[] result;
     }
 
     public static class TagValueWrite {
+
         String tagId;
         int tagCode;
     }
 
     public static class TagValueItem {
+
         String tagId;
         int tagCode;
         String value;
         boolean locked;
     }
-    
+
     public static class PostVerifyNxpRequest {
+
         String tagId;
         String tagVersion;
         String signature;
     }
-    
+
     public static class VerifyNxpTagResponse {
+
         int code;
         String message;
         String tagId;
     }
 
     public static class PostRequestAuthOtpRequest {
+
         String tagId;
         String appId;
     }
 
     public static class RequestAuthOtpResponse {
+
         int code;
         String message;
         String tagId;
@@ -221,44 +243,52 @@ public class ProfilesRestApi {
     }
 
     public static class PostValidateAuthOtpRequest {
+
         long timestamp;
         String otpRequestId;
         int otpResult;
     }
 
     public static class ValidateAuthOtpResponse {
+
         int code;
         String message;
         String tagId;
     }
 
     public static class PostGetVerificationMessage {
+
         String verificationType;
         int verificationState;
     }
 
     public static class GetVerificationMessageResponse {
+
         int code;
         String message;
     }
 
     public static class PostGetVerificationTags {
+
         String[] tagIds;
         String verificationType;
     }
 
     public static class GetVerificationTagsResponse {
+
         int code;
         TagVerificationItem[] result;
     }
 
     public static class TagVerificationItem {
+
         public String tagId;
         public int tagCode;
         public int state;
     }
 
     public static class PageInformation {
+
         public int size;
         public long totalElements;
         public int totalPages;

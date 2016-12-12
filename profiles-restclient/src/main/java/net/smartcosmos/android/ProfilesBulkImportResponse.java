@@ -29,10 +29,12 @@ public class ProfilesBulkImportResponse {
     public CreatedThing[] things;
 
     public static class CreatedRelationship {
+
         String urn;
     }
 
     public static class CreatedThing {
+
         String type;
         String urn;
         String tenantUrn;

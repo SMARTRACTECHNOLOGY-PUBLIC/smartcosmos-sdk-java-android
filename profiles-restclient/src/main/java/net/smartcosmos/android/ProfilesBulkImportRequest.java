@@ -42,6 +42,7 @@ public class ProfilesBulkImportRequest {
     private Map<String, Object>[] things;
 
     public ProfilesBulkImportRequest() {
+
         things = new HashMap[0];
         relationships = new Relationship[0];
     }
@@ -58,10 +59,12 @@ public class ProfilesBulkImportRequest {
 
     public void addTag(String batchId, byte[] uid)
         throws IllegalArgumentException {
+
         addTag(batchId, AsciiHexConverter.bytesToHex(uid));
     }
 
     public void addTag(String batchId, String tagId) {
+
         boolean validBatchId = false;
 
         RelationshipReference source = new RelationshipReference();
@@ -72,8 +75,10 @@ public class ProfilesBulkImportRequest {
         target.urn = PREFIX_TAG + tagId;
 
         for (int i = 0; i < things.length; i++) {
-            String thingType = things[i].get("type").toString();
-            String thingUrn = things[i].get("urn").toString();
+            String thingType = things[i].get("type")
+                .toString();
+            String thingUrn = things[i].get("urn")
+                .toString();
 
             if (source.type.equalsIgnoreCase(thingType) && source.urn.equalsIgnoreCase(thingUrn)) {
                 validBatchId = true;
@@ -124,8 +129,10 @@ public class ProfilesBulkImportRequest {
         String tagUrn = PREFIX_TAG + tagId;
 
         for (int i = 0; i < things.length; i++) {
-            String thingType = things[i].get("type").toString();
-            String thingUrn = things[i].get("urn").toString();
+            String thingType = things[i].get("type")
+                .toString();
+            String thingUrn = things[i].get("urn")
+                .toString();
 
             if (TYPE_TAG.equalsIgnoreCase(thingType) && tagUrn.equalsIgnoreCase(thingUrn)) {
                 things[i].putAll(keyValueMap);
@@ -141,6 +148,7 @@ public class ProfilesBulkImportRequest {
      * @param newRelationships Relationships
      */
     public void addRelationships(Relationship[] newRelationships) {
+
         Relationship[] tmpRelationships = new Relationship[relationships.length + newRelationships.length];
         System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
         System.arraycopy(newRelationships, 0, tmpRelationships, relationships.length, newRelationships.length);
@@ -153,6 +161,7 @@ public class ProfilesBulkImportRequest {
      * @param newThings Things
      */
     public void addThings(Map<String, Object>[] newThings) {
+
         Map<String, Object>[] tmpThings = new HashMap[things.length + newThings.length];
         System.arraycopy(things, 0, tmpThings, 0, things.length);
         System.arraycopy(newThings, 0, tmpThings, things.length, newThings.length);
@@ -165,6 +174,7 @@ public class ProfilesBulkImportRequest {
      * @return relationships
      */
     public Relationship[] getRelationships() {
+
         return relationships.clone();
     }
 
@@ -174,16 +184,19 @@ public class ProfilesBulkImportRequest {
      * @return things
      */
     public Map<String, Object>[] getThings() {
+
         return things.clone();
     }
 
     public static class Relationship {
+
         RelationshipReference source;
         RelationshipReference target;
         String relationshipType;
     }
 
     public static class RelationshipReference {
+
         String type;
         String urn;
     }
