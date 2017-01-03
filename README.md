@@ -1,4 +1,4 @@
-![SMART COSMOS](https://s3-eu-west-1.amazonaws.com/api.smart-cosmos.com/images/smartcosmos.png)
+![SMART COSMOS](https://github.com/SMARTRACTECHNOLOGY-PUBLIC/smartcosmos-sdk-java-android/blob/master/images/sclogo2016.png)
 
 # SMART COSMOS SDK Java for Android
 This repository contains the SMART COSMOS SDK Java for Android.
@@ -20,7 +20,6 @@ SMART COSMOS Profiles REST API optimized for Android Java
 ### Useful links
 
  - [SMART COSMOS API Documentation](https://api.smartcosmos.net)
- - [SMART COSMOS Profiles in the Partner Development Portal](http://partner.smart-cosmos.com/site/global/platform/embed_profiles/index.gsp)
  - [SMART COSMOS Lessons](http://lessons.smart-cosmos.com)
 
 ## SMART COSMOS Utility for Android
@@ -45,7 +44,7 @@ that help you EMBED, ENRICH, EFFECT, and EXPLORE IoT driven data.
 SMART COSMOS also includes an education portal,
 [SMART COSMOS Lessons](http://lessons.smart-cosmos.com), and a
 vibrant developer community at our
-[Partner Development Portal](https://partner.smart-cosmos.com). Developers who
+[Development Portal](https://www.smart-cosmos.com). Developers who
 complete the full Extension Developer learning path, passing all exams, earn the
 right and privileges of being a SMART COSMOS Certified Enginee.
 
