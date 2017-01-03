@@ -23,8 +23,8 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
-
 import java.util.Map;
+
 import retrofit.RestAdapter;
 
 import android.util.Base64;
@@ -73,38 +73,35 @@ public class ProfilesRestClient {
     private RestAdapter _restAdapter;
     private ProfilesRestErrorHandler _restErrorHandler;
 
-    private ProfilesRestResult parseErrorResponse(RuntimeException exResponse)
-    {
+    private ProfilesRestResult parseErrorResponse(RuntimeException exResponse) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         String sMessage = exResponse.getMessage();
         try {
-            if (sMessage.substring(0, 4).equals("HTTP"))
-            {
+            if (sMessage.substring(0, 4)
+                .equals("HTTP")) {
                 int iBodyStart = sMessage.indexOf('\n');
                 ret.httpStatus = Integer.parseInt(sMessage.substring(5, iBodyStart));
                 ProfilesErrorResponse resp = new Gson().fromJson(sMessage.substring(iBodyStart),
-                                                        ProfilesErrorResponse.class);
+                                                                 ProfilesErrorResponse.class);
                 ret.iCode = resp.code;
                 ret.sMessage = resp.message;
-            }
-            else
-            {
+            } else {
                 ret.sMessage = exResponse.getMessage();
             }
-        }
-        catch (Exception exJson)
-        {
+        } catch (Exception exJson) {
             ret.sMessage = sMessage;
         }
         return ret;
     }
 
     static final String TAG = "ProfilesRestClient";
-   
+
     // default result object for rest calls
     public class ProfilesRestResult {
 
         public ProfilesRestResult() {
+
             httpStatus = -1;
             iCode = -1;
             sMessage = "";
@@ -132,31 +129,32 @@ public class ProfilesRestClient {
      * @param sPassword password (or null if no authentication is used)
      */
     public ProfilesRestClient(String sServer, String sUser, String sPassword) {
-       _sServer = sServer;
-       _sUser = sUser;
-       _sPassword = sPassword;
-       _restErrorHandler = new ProfilesRestErrorHandler();
-       
-       if ((_sUser != null) && (_sPassword != null)) {
-           _apiRequestInterceptor = new ProfilesApiRequestInterceptor();
-           _apiRequestInterceptor.setUser(_sUser);
-           _apiRequestInterceptor.setPassword(_sPassword);
 
-           _restAdapter = new RestAdapter.Builder ()
+        _sServer = sServer;
+        _sUser = sUser;
+        _sPassword = sPassword;
+        _restErrorHandler = new ProfilesRestErrorHandler();
+
+        if ((_sUser != null) && (_sPassword != null)) {
+            _apiRequestInterceptor = new ProfilesApiRequestInterceptor();
+            _apiRequestInterceptor.setUser(_sUser);
+            _apiRequestInterceptor.setPassword(_sPassword);
+
+            _restAdapter = new RestAdapter.Builder()
                 .setRequestInterceptor(_apiRequestInterceptor)
                 .setEndpoint(_sServer)
                 .setErrorHandler(_restErrorHandler)
                 .build();
-       } else {
-           _restAdapter = new RestAdapter.Builder ()
+        } else {
+            _restAdapter = new RestAdapter.Builder()
                 .setEndpoint(_sServer)
                 .setErrorHandler(_restErrorHandler)
                 .build();
-       }
+        }
     }
 
-    public ProfilesRestResult getTestPing()
-    {
+    public ProfilesRestResult getTestPing() {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
@@ -164,8 +162,7 @@ public class ProfilesRestClient {
             ret.httpStatus = 204;
             ret.iCode = 0;
             ret.sMessage = "Connection successful";
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "getTestPing: HTTP " + ret.httpStatus +
@@ -180,16 +177,16 @@ public class ProfilesRestClient {
      * @throws Exception
      */
     public String getAccount()
-            throws Exception {
+        throws Exception {
+
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetAccountResponse accResp = client.getAccount();
-                return accResp.name;
-        }
-        catch (RuntimeException ex) {
+            return accResp.name;
+        } catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
             String sError = "getAccount: HTTP " + prr.httpStatus +
-                    ", code = " + prr.iCode + ", message = " + prr.sMessage;
+                            ", code = " + prr.iCode + ", message = " + prr.sMessage;
             Log.d(TAG, sError);
             throw new Exception(sError);
         }
@@ -200,12 +197,12 @@ public class ProfilesRestClient {
      *
      * @param uid
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = Tag TDN data if code == 0, error message otherwise
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = Tag TDN data if code == 0, error message otherwise
      */
-    public ProfilesRestResult getTagTdn(byte[] uid)
-    {
+    public ProfilesRestResult getTagTdn(byte[] uid) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
@@ -213,8 +210,7 @@ public class ProfilesRestClient {
             ret.httpStatus = 200;
             ret.iCode = tdnResp.code;
             ret.sMessage = tdnResp.value;
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "getTagTdn: HTTP " + ret.httpStatus +
@@ -228,28 +224,27 @@ public class ProfilesRestClient {
      * @param tagId tag ID
      * @param nameLike Property search name pattern
      * @return TagMetadataDefinitionProperty
-     *          .propertyId
-     *          .propertyName
-     *          .dataType
-     *          .dataAvailable
+     * .propertyId
+     * .propertyName
+     * .dataType
+     * .dataAvailable
      * @throws Exception
      */
     public TagMetadataDefinitionProperty[] getTagMetadataProperties(byte[] tagId, String nameLike)
-        throws Exception
-    {
+        throws Exception {
+
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetTagMetadataDefinitionResponse resp = client.getTagMetadataDefinition(
-                    AsciiHexConverter.bytesToHex(tagId),
-                    nameLike);
+                AsciiHexConverter.bytesToHex(tagId),
+                nameLike);
             if (resp.code == 0) {
                 return resp.properties;
             }
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
             String sError = "getTagMetadataProperties: HTTP " + prr.httpStatus +
-                    ", code = " + prr.iCode + ", message = " + prr.sMessage;
+                            ", code = " + prr.iCode + ", message = " + prr.sMessage;
             Log.d(TAG, sError);
             throw new Exception(sError);
         }
@@ -259,23 +254,23 @@ public class ProfilesRestClient {
     /**
      * Look up an array of all batches which match the given criterias.
      *
-     * @param propertyMap   map of batch properties as search criteria (incl. max count of results)
+     * @param propertyMap map of batch properties as search criteria (incl. max count of results)
      * @return matching Batch URNs
      * @throws Exception
      */
     public String[] getBatchesByProperties(Map<ProfilesQueryBatchProperty, Object> propertyMap)
-            throws Exception
-    {
+        throws Exception {
+
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetQueryBatchesResponse batches = client.getQueryBatches(propertyMap);
-            if (batches.code == 0)
+            if (batches.code == 0) {
                 return batches.batchUrns;
-        }
-        catch (RuntimeException ex) {
+            }
+        } catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
             String sError = "getBatchesByProperties: HTTP " + prr.httpStatus +
-                       ", code = " + prr.iCode + ", message = " + prr.sMessage;
+                            ", code = " + prr.iCode + ", message = " + prr.sMessage;
             Log.d(TAG, sError);
             throw new Exception(sError);
         }
@@ -285,23 +280,23 @@ public class ProfilesRestClient {
     /**
      * Look up an array of all tag ids which match the given criterias.
      *
-     * @param propertyMap   map of tag properties as search criteria (incl. max count of results)
+     * @param propertyMap map of tag properties as search criteria (incl. max count of results)
      * @return matching Tag IDs
      * @throws Exception
      */
     public String[] getTagsByProperties(Map<ProfilesQueryTagProperty, Object> propertyMap)
-            throws Exception
-    {
+        throws Exception {
+
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetQueryTagsResponse tags = client.getQueryTags(propertyMap);
-            if (tags.code == 0)
+            if (tags.code == 0) {
                 return tags.tagIds;
-        }
-        catch (RuntimeException ex) {
+            }
+        } catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
             String sError = "getTagsByProperties: HTTP " + prr.httpStatus +
-                       ", code = " + prr.iCode + ", message = " + prr.sMessage;
+                            ", code = " + prr.iCode + ", message = " + prr.sMessage;
             Log.d(TAG, sError);
             throw new Exception(sError);
         }
@@ -311,15 +306,15 @@ public class ProfilesRestClient {
     /**
      * Function to get an application key from a tag.
      *
-     * @param uid		tag UID
-     * @param appId 	Application ID of the key
+     * @param uid tag UID
+     * @param appId Application ID of the key
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = Tag key if code == 0, error message otherwise
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = Tag key if code == 0, error message otherwise
      */
-    public ProfilesRestResult getSingleTagKey(byte[] uid, String appId)
-    {
+    public ProfilesRestResult getSingleTagKey(byte[] uid, String appId) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         PostGetTagKey pGtk = new PostGetTagKey();
         pGtk.tagIds = new String[1];
@@ -329,31 +324,30 @@ public class ProfilesRestClient {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetTagKeyResponse resp = client.postGetTagKey(pGtk);
             ret.httpStatus = 200;
-            if (resp.result.length == 1)
-            {
+            if (resp.result.length == 1) {
                 ret.iCode = resp.result[0].tagCode;
                 ret.sMessage = resp.result[0].key;
             }
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "getSingleTagKey: HTTP " + ret.httpStatus +
-                ", code = " + ret.iCode + ", message = " + ret.sMessage);
+                   ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
     }
 
     /**
      * Function to get an application value from a tag.
      *
-     * @param uid		tag UID
-     * @param appId    Application ID of the value
+     * @param uid tag UID
+     * @param appId Application ID of the value
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = Tag value if code == 0, error message otherwise
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = Tag value if code == 0, error message otherwise
      */
     public ProfilesRestResult getSingleTagValue(byte[] uid, String appId) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         PostGetTagValue pGtv = new PostGetTagValue();
         pGtv.tagIds = new String[1];
@@ -363,48 +357,48 @@ public class ProfilesRestClient {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetTagValueResponse resp = client.postGetTagValue(pGtv);
             ret.httpStatus = 200;
-            if (resp.result.length == 1)
-            {
+            if (resp.result.length == 1) {
                 ret.iCode = resp.result[0].tagCode;
                 ret.sMessage = resp.result[0].value;
             }
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "getSingleTagValue: HTTP " + ret.httpStatus +
-                ", code = " + ret.iCode + ", message = " + ret.sMessage);
+                   ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
     }
 
     /**
      * Function to update a value for a tag.
      *
-     * @param uid		tag UID
-     * @param appId     Application ID of the value
-     * @param value     value to be updated (or null if value should remain unchanged)
+     * @param uid tag UID
+     * @param appId Application ID of the value
+     * @param value value to be updated (or null if value should remain unchanged)
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = Tag value if code == 0, error message otherwise
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = Tag value if code == 0, error message otherwise
      */
     public ProfilesRestResult updateSingleTagValue(byte[] uid, String appId, String value) {
+
         return updateSingleTagValue(uid, appId, value, false);
     }
 
     /**
      * Function to update a value for a tag.
      *
-     * @param uid	    tag UID
-     * @param appId     Application ID of the value
-     * @param value     value to be updated (or null if value should remain unchanged)
-     * @param locked    set to true to lock the tag
+     * @param uid tag UID
+     * @param appId Application ID of the value
+     * @param value value to be updated (or null if value should remain unchanged)
+     * @param locked set to true to lock the tag
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = Tag value if code == 0, error message otherwise
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = Tag value if code == 0, error message otherwise
      */
     public ProfilesRestResult updateSingleTagValue(byte[] uid, String appId, String value, boolean locked) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         TagValuesToWrite tVtw = new TagValuesToWrite();
         tVtw.tagId = AsciiHexConverter.bytesToHex(uid);
@@ -412,38 +406,36 @@ public class ProfilesRestClient {
         tVtw.locked = locked;
         PutUpdateTagValue pUtv = new PutUpdateTagValue();
         pUtv.appId = appId;
-        pUtv.tags = new TagValuesToWrite[] {tVtw};
+        pUtv.tags = new TagValuesToWrite[] { tVtw };
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             UpdateTagValueResponse resp = client.putUpdateTagValue(pUtv);
             ret.httpStatus = 200;
-            if (resp.result.length == 1)
-            {
+            if (resp.result.length == 1) {
                 ret.iCode = resp.result[0].tagCode;
                 ret.sMessage = resp.result[0].tagId;
             }
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "updateSingleTagValue: HTTP " + ret.httpStatus +
-                ", code = " + ret.iCode + ", message = " + ret.sMessage);
+                   ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
     }
 
     /**
      * Function to verify the signature of a NXP NTAG.
      *
-     * @param uid		tag UID
-     * @param version 	NXP version info
-     * @param signature	ECDSA signature of the tag
+     * @param uid tag UID
+     * @param version NXP version info
+     * @param signature ECDSA signature of the tag
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = status message
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = status message
      */
-    public ProfilesRestResult verifyNxpTag(byte[] uid, byte[] version, byte[] signature)
-    {
+    public ProfilesRestResult verifyNxpTag(byte[] uid, byte[] version, byte[] signature) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         PostVerifyNxpRequest pNxp = new PostVerifyNxpRequest();
         pNxp.tagId = AsciiHexConverter.bytesToHex(uid);
@@ -456,8 +448,7 @@ public class ProfilesRestClient {
             ret.httpStatus = 200;
             ret.iCode = resp.code;
             ret.sMessage = resp.message;
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "verifyNxpTag: HTTP " + ret.httpStatus +
@@ -468,13 +459,13 @@ public class ProfilesRestClient {
     /**
      * Function for OTP authentication - step 1.
      *
-     * @param uid		tag UID
-     * @param appId 	should be "hmac"
+     * @param uid tag UID
+     * @param appId should be "hmac"
      * @return ProfilesAuthOtpState - new OTP authentication state object
-     *			.iCode = 0 if successful
+     * .iCode = 0 if successful
      */
-    public ProfilesAuthOtpState requestOtpAuthentication(byte[] uid, String appId)
-    {
+    public ProfilesAuthOtpState requestOtpAuthentication(byte[] uid, String appId) {
+
         ProfilesAuthOtpState ret = new ProfilesAuthOtpState();
         PostRequestAuthOtpRequest pROtp = new PostRequestAuthOtpRequest();
         pROtp.tagId = AsciiHexConverter.bytesToHex(uid);
@@ -489,9 +480,8 @@ public class ProfilesRestClient {
             ret.tagId = AsciiHexConverter.hexToBytes(resp.tagId);
             ret.otpRequestId = resp.otpRequestId;
             ret.otpVector = Base64.decode(resp.otpVector, 0);
-        }
-        catch (RuntimeException ex) {
-            ret = (ProfilesAuthOtpState)parseErrorResponse(ex);
+        } catch (RuntimeException ex) {
+            ret = (ProfilesAuthOtpState) parseErrorResponse(ex);
         }
         Log.d(TAG, "requestOtpAuthentication: HTTP " + ret.httpStatus +
                    ", code = " + ret.iCode + ", message = " + ret.sMessage);
@@ -501,25 +491,22 @@ public class ProfilesRestClient {
     /**
      * Function for OTP authentication - step 2.
      *
-     * @param otpState  ProfilesAuthOtpState from step 1
-     * @param hmac	    OTP calculation secret from tag with given uid
+     * @param otpState ProfilesAuthOtpState from step 1
+     * @param hmac OTP calculation secret from tag with given uid
      * @return ProfilesAuthOtpState - updated OTP authentication state object
-     *			.otpResult (contains the current one-time password now)
+     * .otpResult (contains the current one-time password now)
      */
-    public ProfilesAuthOtpState calculateOtpAuthResult(ProfilesAuthOtpState otpState, byte[] hmac)
-    {
+    public ProfilesAuthOtpState calculateOtpAuthResult(ProfilesAuthOtpState otpState, byte[] hmac) {
         // build the OTP secret from otpVector and tag secret (stored in tag:hmac:auth metadata)
         try {
             byte[] secret = new byte[20];
-            for (int i = 0; i < 20; i++)
-            {
+            for (int i = 0; i < 20; i++) {
                 secret[i] = hmac[otpState.otpVector[i]];
             }
             otpState.timestamp = Rfc6238.getCurrentTimeIndex();
             otpState.otpResult = Rfc6238.getCodeForTimeIndex(secret, otpState.timestamp);
             Log.d(TAG, "Calculated OTP Result: " + otpState.otpResult);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.d(TAG, "OTP calculation error: " + e.getMessage());
             return null;
         }
@@ -531,12 +518,12 @@ public class ProfilesRestClient {
      *
      * @param otpState ProfilesAuthOtpState from step 2
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = status message
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = status message
      */
-    public ProfilesRestResult validateOtpAuthentication(ProfilesAuthOtpState otpState)
-    {
+    public ProfilesRestResult validateOtpAuthentication(ProfilesAuthOtpState otpState) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         PostValidateAuthOtpRequest pVOtp = new PostValidateAuthOtpRequest();
         pVOtp.timestamp = otpState.timestamp;
@@ -549,8 +536,7 @@ public class ProfilesRestClient {
             ret.httpStatus = 200;
             ret.iCode = resp.code;
             ret.sMessage = resp.message;
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "validateOtpAuthentication: HTTP " + ret.httpStatus +
@@ -564,13 +550,15 @@ public class ProfilesRestClient {
      * @param verificationType
      * @param verificationState
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 0 if successful
-     *			.sMessage = status message
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 0 if successful
+     * .sMessage = status message
      */
-    public ProfilesRestResult getVerificationMessage(String verificationType,
-                                                     int verificationState)
-    {
+    @Deprecated
+    public ProfilesRestResult getVerificationMessage(
+        String verificationType,
+        int verificationState) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
         PostGetVerificationMessage pGvm = new PostGetVerificationMessage();
         pGvm.verificationType = verificationType;
@@ -582,8 +570,7 @@ public class ProfilesRestClient {
             ret.httpStatus = 200;
             ret.iCode = resp.code;
             ret.sMessage = resp.message;
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "getVerificationMessage: HTTP " + ret.httpStatus +
@@ -595,18 +582,19 @@ public class ProfilesRestClient {
      * Function for Tag License Verification.
      *
      * @param tagIds Tag Ids (HF UID or UHF TID)
-     * @param verificationType	  License descriptor
+     * @param verificationType License descriptor
      * @return TagVerificationItem[]: array of verified tags
-     *          .tagId: tag ID
-     *          .tagCode:
-     *              0 = Tag exists in Profiles and contains a license state
-     *              1 = Tag does not exist in Profiles
-     *              3 = Tag exists in Profiles, but does not contain license info
-     *          .state: License state (use @link getVerificationMessage to get the description)
+     * .tagId: tag ID
+     * .tagCode:
+     * 0 = Tag exists in Profiles and contains a license state
+     * 1 = Tag does not exist in Profiles
+     * 3 = Tag exists in Profiles, but does not contain license info
+     * .state: License state (use @link getVerificationMessage to get the description)
      * @throws Exception
      */
     public TagVerificationItem[] getVerificationState(String[] tagIds, String verificationType)
         throws Exception {
+
         PostGetVerificationTags pGvt = new PostGetVerificationTags();
         pGvt.tagIds = tagIds.clone();
         pGvt.verificationType = verificationType;
@@ -614,17 +602,16 @@ public class ProfilesRestClient {
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             GetVerificationTagsResponse tags = client.postGetVerificationTags(pGvt);
-            for (TagVerificationItem tagItem : tags.result)
-            {
+            for (TagVerificationItem tagItem : tags.result) {
                 Log.d(TAG, "Tag ID: " + tagItem.tagId + ", Code: " + tagItem.tagCode + " State: " + tagItem.state);
             }
-            if (tags.code == 0)
+            if (tags.code == 0) {
                 return tags.result;
-        }
-        catch (RuntimeException ex) {
+            }
+        } catch (RuntimeException ex) {
             ProfilesRestResult prr = parseErrorResponse(ex);
             String sError = "getVerificationTags: HTTP " + prr.httpStatus +
-                       ", code = " + prr.iCode + ", message = " + prr.sMessage;
+                            ", code = " + prr.iCode + ", message = " + prr.sMessage;
             Log.d(TAG, sError);
             throw new Exception(sError);
         }
@@ -632,31 +619,57 @@ public class ProfilesRestClient {
     }
 
     /**
-     * Import large data sets into Profiles
+     * Import large data sets into Profiles (API: Profiles v2)
      *
      * @param profilesTransactionRequest
      * @return ProfilesRestResult
-     *			.httpStatus: HTTP Status of the request or negative value in case of network error
-     *			.iCode = 1 if successful
-     *			.sMessage = status message
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 1 if successful
+     * .sMessage = status message
      */
-    public ProfilesRestResult importProfilesData(ProfilesTransactionRequest profilesTransactionRequest)
-    {
+    public ProfilesRestResult importProfilesData(ProfilesTransactionRequest profilesTransactionRequest) {
+
         ProfilesRestResult ret = new ProfilesRestResult();
 
         try {
             IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
             ProfilesErrorResponse resp = client.postTransaction(IMPORT_HANDLER,
-                    new ProfilesTransactionRequest[] {profilesTransactionRequest});
+                                                                new ProfilesTransactionRequest[] { profilesTransactionRequest });
             ret.httpStatus = 200;
             ret.iCode = resp.code;
             ret.sMessage = resp.message;
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             ret = parseErrorResponse(ex);
         }
         Log.d(TAG, "importProfilesData: HTTP " + ret.httpStatus +
-                ", code = " + ret.iCode + ", message = " + ret.sMessage);
+                   ", code = " + ret.iCode + ", message = " + ret.sMessage);
+        return ret;
+    }
+
+    /**
+     * Import large data sets into Profiles (API: Profiles v3)
+     *
+     * @param profilesBulkImportRequest
+     * @return ProfilesRestResult
+     * .httpStatus: HTTP Status of the request or negative value in case of network error
+     * .iCode = 1 if successful
+     * .sMessage = status message
+     */
+    public ProfilesRestResult importProfilesData(ProfilesBulkImportRequest profilesBulkImportRequest) {
+
+        ProfilesRestResult ret = new ProfilesRestResult();
+
+        try {
+            IProfilesMethods client = _restAdapter.create(IProfilesMethods.class);
+            client.postBulkImport(profilesBulkImportRequest);
+            ret.httpStatus = 200;
+            ret.iCode = 1;
+            ret.sMessage = "";
+        } catch (RuntimeException ex) {
+            ret = parseErrorResponse(ex);
+        }
+        Log.d(TAG, "importProfilesData: HTTP " + ret.httpStatus +
+                   ", code = " + ret.iCode + ", message = " + ret.sMessage);
         return ret;
     }
 }

@@ -4,7 +4,7 @@ package net.smartcosmos.android;
  * *#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
  * SMART COSMOS Profiles RestClient for Android
  * ===============================================================================
- * Copyright (C) 2015 - 2016 Smartrac Technology Fletcher, Inc.
+ * Copyright (C) 2016 Smartrac Technology Fletcher, Inc.
  * ===============================================================================
  * SMART COSMOS SDK
  * (C) Copyright 2015, Smartrac Technology Fletcher, Inc.
@@ -23,8 +23,21 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
-@Deprecated
-public enum ProfilesEntityReferenceType {
-    Object,
-    ObjectAddress;
+public class ProfilesBulkImportResponse {
+
+    public CreatedRelationship[] relationships;
+    public CreatedThing[] things;
+
+    public static class CreatedRelationship {
+
+        String urn;
+    }
+
+    public static class CreatedThing {
+
+        String type;
+        String urn;
+        String tenantUrn;
+        Boolean active;
+    }
 }

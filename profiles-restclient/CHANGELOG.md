@@ -2,6 +2,11 @@
 
 ## Version History
 
+### 1.6
+
+ - Dependencies updated (gson, utility)
+ - Tag data import updated to Profiles v3 API
+
 ### 1.5
 
  - Support added to look up property availability for a tag ID

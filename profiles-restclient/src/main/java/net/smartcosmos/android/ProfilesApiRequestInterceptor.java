@@ -23,9 +23,10 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
-
 import android.util.Base64;
+
 import java.io.UnsupportedEncodingException;
+
 import retrofit.RequestInterceptor;
 
 /**
@@ -36,15 +37,13 @@ public class ProfilesApiRequestInterceptor implements RequestInterceptor {
     private String _sUser;
     private String _sPassword;
 
-    //@Override
     public void intercept(RequestFacade requestFacade) {
 
         if (_sUser != null) {
             try {
                 final String authorizationValue = encodeCredentialsForBasicAuthorization();
                 requestFacade.addHeader("Authorization", authorizationValue);
-            }
-            catch (UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException e) {
                 // Do nothing - overridden method does not support throwing exceptions.
                 // The UTF-8 encoding is part of the Android runtime, so this exception is unlikely to be ever thrown.
             }
@@ -53,24 +52,29 @@ public class ProfilesApiRequestInterceptor implements RequestInterceptor {
     }
 
     private String encodeCredentialsForBasicAuthorization()
-            throws UnsupportedEncodingException {
+        throws UnsupportedEncodingException {
+
         final String userAndPassword = _sUser + ":" + _sPassword;
         return "Basic " + Base64.encodeToString(userAndPassword.getBytes("UTF-8"), Base64.NO_WRAP);
     }
 
     public String getUser() {
+
         return _sUser;
     }
 
     public void setUser(String sUser) {
-    	_sUser = sUser;
+
+        _sUser = sUser;
     }
-    
+
     public String getPassword() {
+
         return _sPassword;
     }
 
     public void setPassword(String sPassword) {
-    	_sPassword = sPassword;
-    }    
+
+        _sPassword = sPassword;
+    }
 }

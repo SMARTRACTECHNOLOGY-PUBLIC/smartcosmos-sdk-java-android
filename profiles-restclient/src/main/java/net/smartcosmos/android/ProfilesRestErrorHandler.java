@@ -23,7 +23,6 @@ package net.smartcosmos.android;
  * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
  */
 
-
 import java.io.UnsupportedEncodingException;
 
 import retrofit.ErrorHandler;
@@ -34,30 +33,28 @@ import retrofit.mime.TypedInput;
 import retrofit.mime.TypedByteArray;
 
 public class ProfilesRestErrorHandler implements ErrorHandler {
-	public Throwable handleError(RetrofitError cause) {
-		Response r = cause.getResponse();
-		if (r != null) {
-			String sBody;
-			String sError = "HTTP " + String.format("%03d",r.getStatus());
-			TypedInput body = r.getBody();
-			if (body != null)
-			{
-	            byte[] bodyBytes = ((TypedByteArray) body).getBytes();
-	            String bodyMime = body.mimeType();
-	            String bodyCharset = MimeUtil.parseCharset(bodyMime, "UTF-8");
-	            try
-	            {
-	            	sBody = new String(bodyBytes, bodyCharset);
-	            }
-	            catch (UnsupportedEncodingException e)
-	            {
-	            	sBody = e.getMessage();
-	            }
-				sError = sError + "\n" + sBody;
-			}
-			throw new RuntimeException(sError);
-		}
-		return cause;
-	}
+
+    public Throwable handleError(RetrofitError cause) {
+
+        Response r = cause.getResponse();
+        if (r != null) {
+            String sBody;
+            String sError = "HTTP " + String.format("%03d", r.getStatus());
+            TypedInput body = r.getBody();
+            if (body != null) {
+                byte[] bodyBytes = ((TypedByteArray) body).getBytes();
+                String bodyMime = body.mimeType();
+                String bodyCharset = MimeUtil.parseCharset(bodyMime, "UTF-8");
+                try {
+                    sBody = new String(bodyBytes, bodyCharset);
+                } catch (UnsupportedEncodingException e) {
+                    sBody = e.getMessage();
+                }
+                sError = sError + "\n" + sBody;
+            }
+            throw new RuntimeException(sError);
+        }
+        return cause;
+    }
 
 }	
