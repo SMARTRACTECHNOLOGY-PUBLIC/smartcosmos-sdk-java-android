@@ -49,12 +49,12 @@ public class ProfilesBulkImportRequest {
 
     public void addBatch(String batchId) {
 
-        Map<String, Object>[] batchThing = new HashMap[1];
-        batchThing[0].put("active", true);
-        batchThing[0].put("name", batchId);
-        batchThing[0].put("type", TYPE_BATCH);
-        batchThing[0].put("urn", PREFIX_BATCH + batchId);
-        addThings(batchThing);
+        Map<String, Object> batchThing = new HashMap<String, Object>();
+        batchThing.put("active", true);
+        batchThing.put("name", batchId);
+        batchThing.put("type", TYPE_BATCH);
+        batchThing.put("urn", PREFIX_BATCH + batchId);
+        addThing(batchThing);
     }
 
     public void addTag(String batchId, byte[] uid)
@@ -89,18 +89,18 @@ public class ProfilesBulkImportRequest {
             throw new IllegalArgumentException("Cannot add tag to absent batch " + batchId + ".");
         }
 
-        Map<String, Object>[] tagThing = new HashMap[1];
-        tagThing[0].put("active", true);
-        tagThing[0].put("name", tagId);
-        tagThing[0].put("type", target.type);
-        tagThing[0].put("urn", target.urn);
-        addThings(tagThing);
+        Map<String, Object> tagThing = new HashMap<String, Object>();
+        tagThing.put("active", true);
+        tagThing.put("name", tagId);
+        tagThing.put("type", target.type);
+        tagThing.put("urn", target.urn);
+        addThing(tagThing);
 
-        Relationship[] tagRelationship = new Relationship[1];
-        tagRelationship[0].source = source;
-        tagRelationship[0].target = target;
-        tagRelationship[0].relationshipType = REL_CONTAINS;
-        addRelationships(tagRelationship);
+        Relationship tagRelationship = new Relationship();
+        tagRelationship.source = source;
+        tagRelationship.target = target;
+        tagRelationship.relationshipType = REL_CONTAINS;
+        addRelationship(tagRelationship);
     }
 
     /**
@@ -143,6 +143,19 @@ public class ProfilesBulkImportRequest {
     }
 
     /**
+     * Add a custom relationship to import request.
+     *
+     * @param newRelationship Relationships
+     */
+    public void addRelationship(Relationship newRelationship) {
+
+        Relationship[] tmpRelationships = new Relationship[relationships.length + 1];
+        System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
+        tmpRelationships[relationships.length] = newRelationship;
+        relationships = tmpRelationships.clone();
+    }
+
+    /**
      * Add custom relationships to import request.
      *
      * @param newRelationships Relationships
@@ -153,6 +166,19 @@ public class ProfilesBulkImportRequest {
         System.arraycopy(relationships, 0, tmpRelationships, 0, relationships.length);
         System.arraycopy(newRelationships, 0, tmpRelationships, relationships.length, newRelationships.length);
         relationships = tmpRelationships.clone();
+    }
+
+    /**
+     * Add a custom things to import request.
+     *
+     * @param newThing Thing
+     */
+    public void addThing(Map<String, Object> newThing) {
+
+        Map<String, Object>[] tmpThings = new HashMap[things.length + 1];
+        System.arraycopy(things, 0, tmpThings, 0, things.length);
+        tmpThings[things.length] = newThing;
+        things = tmpThings.clone();
     }
 
     /**
